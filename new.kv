@@ -1,0 +1,37 @@
+<DialogTabsContainer>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "70dp"
+
+    MDTextField:
+        id: dialog_text_field
+        hint_text: "start typing ..."
+
+<ListItemWithCheckBox>
+    
+    RightCheckBox:
+        on_active: root.on_checkbox_active(self.active)
+
+
+<MainScreen>:
+    AppContainer:
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'hd red cool vertical lines iphone 4 wallpapers backgrounds.jpg'
+
+        orientation: 'vertical'
+        MDToolbar:
+            title: "Organizer 2020"
+            right_action_items: [["menu", lambda x: x]]
+        MDTabs:
+            id: tabs
+            on_tab_switch: root.on_tab_switch(*args)
+            background_normal: 0,0,0,0
+    MDToolbar:
+    MDFloatingActionButtonSpeedDial:
+        data: {"android": "add tab", "minus":"delete", "plus": "add note"}
+        rotation_root_buton: True
+        callback: root.callback_tab

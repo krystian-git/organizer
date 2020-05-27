@@ -1,0 +1,99 @@
+<ListItemWithCheckbox>
+    RightCheckbox:
+
+<Box>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "120dp"
+
+    MDTextField:
+        hint_text: "start typing ..."
+  
+    
+
+<MainScreen>:
+    Containe:
+        orientation: 'vertical'
+        MDToolbar:
+            title: "Organizer UltraPure"
+            right_action_items: [["menu", lambda x: x]]
+        MDTabs:
+            on_tab_switch: app.on_tab_switch(*args)
+
+            Tabs:
+                text: 'Aiden'
+                ScrollView:
+
+                    MDList:
+                        id: aiden
+                        ListItemWithCheckbox:
+                            text: 'Ring Aldi'
+                        ListItemWithCheckbox:
+                            text: 'Order Office Stuff'
+                        ListItemWithCheckbox:
+                            text: 'Send sample to Lidl'
+                        ListItemWithCheckbox:
+                            text: 'Buy new headphones'
+                        ListItemWithCheckbox:
+                            text: 'Try get Amazon'
+                        ListItemWithCheckbox:
+                            text: 'Check desinfection procedure with Padriac'
+                        ListItemWithCheckbox:
+                            text: 'Order Office Stuff'
+                        ListItemWithCheckbox:
+                            text: 'Send sample to Lidl'
+                        ListItemWithCheckbox:
+                            text: 'Buy new headphones'
+                        ListItemWithCheckbox:
+                            text: 'Try get Amazon'
+                        ListItemWithCheckbox:
+                            text: 'Check desinfection procedure'
+                        ListItemWithCheckbox:
+                            text: 'Talk to Michael'
+            Tabs:
+                text: 'Ann_Marie'
+                ScrollView:
+
+                    MDList:
+                        
+                        id: ann_marie
+                        
+                        
+            Tabs:
+                text: 'Jarek'
+                ScrollView:
+
+                    MDList:
+                        id: jarek
+                        ListItemWithCheckbox:
+                            text: 'Sending Uniphar'
+                        ListItemWithCheckbox:
+                            text: 'To fill Hollisters'
+                        ListItemWithCheckbox:
+                            text: 'Ring Rory @ filling Machine'
+                        ListItemWithCheckbox:
+                            text: 'Check water sample'
+                        ListItemWithCheckbox:
+                            text: 'Get bio labs'
+            Tabs:
+                text: 'John'
+                ScrollView:
+
+                    MDList:
+                        id: john
+                        ListItemWithCheckbox:
+                            text: 'Order Compressor'
+                        ListItemWithCheckbox:
+                            text: 'Check payslip'
+                        ListItemWithCheckbox:
+                            text: 'Check App'
+                        ListItemWithCheckbox:
+                            text: 'Disccuss Internet Link'
+    
+    MDToolbar:
+    
+    MDFloatingActionButtonSpeedDial:
+        data: {"android": "add tab", "minus":"delete", "plus": "add note"}
+        rotation_root_buton: True
+        callback: root.callback

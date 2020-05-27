@@ -1,0 +1,39 @@
+
+
+<DialogTabsContainer>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "70dp"
+
+    MDTextField:
+        hint_text: "start typing ..."
+        text: ''
+
+<ListItemWithCheckBox>
+    #on_touch_down: root.on_touch_item(self.text)
+    
+    RightCheckBox:
+        #on_active: root.on_checkbox_active(self.active)
+
+
+<MainScreen>:
+    
+    TabsContainer:
+        id: tabs_container
+        orientation: 'vertical'
+        
+        MDToolbar:
+            title: "Organizer 2020"
+            right_action_items: [["menu", lambda x: x]]
+        
+        MDTabs:
+            id: tabs
+            on_tab_switch: parent.on_tab_switch(*args)
+    MDToolbar:
+    
+    MDFloatingActionButtonSpeedDial:
+        data: {"android": "add tab", "minus":"delete selected", "plus": "new note"}
+        rotation_root_buton: True
+        callback: tabs_container.callback_tab
+        
