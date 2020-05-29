@@ -10,6 +10,7 @@ from kivymd.uix.button import MDFlatButton
 from kivy.uix.scrollview import ScrollView
 from kivymd.uix.list import MDList
 from kivymd.uix.behaviors import TouchBehavior
+from kivymd.theming import ThemableBehavior
 import json
 import requests
 
@@ -89,6 +90,19 @@ class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
         self.dialog.dismiss()
 
 
+class ContentNavigationDrawer(BoxLayout):
+    pass
+
+class DrawerList(ThemableBehavior, MDList):
+    def set_color_item(self, instance_item):
+        '''Called when tap on a menu item.'''
+
+        # Set the color of the icon and text for the menu item.
+        for item in self.children:
+            if item.text_color == self.theme_cls.primary_color:
+                item.text_color = self.theme_cls.text_color
+                break
+        instance_item.text_color = self.theme_cls.primary_color
         
 class RightCheckBox(IRightBodyTouch, MDCheckbox):
     '''Custom right container.'''
@@ -139,16 +153,15 @@ class MainScreen(Screen):
     def add_tab(self,instance):
         for obj in self.dialog.content_cls.children:
             self.tab = Tabs(text=obj.text)
-            print(self)
-            print(self.tab)
-            print(self)
+            
             self.ids.tabs.add_widget(self.tab)
+        self.dialog.dismiss()
+
         a = {obj.text:{'_init':True}}
         data = json.dumps(a)
         tab_name_to_database = json.loads(data)
         print(tab_name_to_database)
         requests.patch(url=NewApp.url, json=tab_name_to_database)
-        self.dialog.dismiss()
         sv = ScrollView()
         self.tab.add_widget(sv)
         self.tabs_list.append(obj.text)
@@ -159,7 +172,6 @@ class MainScreen(Screen):
         # add list name to list which we be referencing to add list_item
         self.mdlists_dict[obj.text] = tab_name
         self.tab_active_id = obj.text
-        print(self.mdlists_dict)
         
     def popup_new_note(self):
         self.dialog = MDDialog(title='Add new note',
@@ -179,17 +191,9 @@ class MainScreen(Screen):
             self.item = ListItemWithCheckbox(text=obj.text)
             self.mdlists_dict[self.tab_active_id].add_widget(self.item)
         self.dialog.dismiss()
-        print(self.tab_active_id)
-        print(self.items_dict)
-        print(obj.text)
-               
+                     
         self.items_dict[self.tab_active_id][obj.text] = True
         self.items_dict[self.tab_active_id]['_init'] = True
-
-        print('czopopzopopcopz')
-
-        print(self.items_dict)
-        print(obj.text)
         data = json.dumps({self.tab_active_id:self.items_dict[self.tab_active_id]})
         item_to_database = json.loads(data)
 
@@ -217,14 +221,14 @@ class NewApp(MDApp):
     url = 'https://taskator12.firebaseio.com/.json'
     request = requests.get(url=url)
     database = request.json()
-    print(database)
-    #MainScreen.items_dict = database
-    print(MainScreen.items_dict)
+   
     def build(self):
+    
+        self.theme_cls.primary_palette = "BlueGray"
+
         return MainScreen()
 
     def on_start(self):
-        
         if self.database:
             for name_tab, item_name in self.database.items():
                 #self.items_dict_list[name_tab] = {}
@@ -245,7 +249,6 @@ class NewApp(MDApp):
                             print(items)
                             item = ListItemWithCheckbox(text=items)
                             MainScreen.mdlists_dict[name_tab].add_widget(item)
-                            print(self.items_dict_list)
                 MainScreen.items_dict[name_tab] = self.items_dict_list
                 print(MainScreen.items_dict)
         else:
