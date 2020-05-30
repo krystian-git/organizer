@@ -15,41 +15,9 @@
         on_active: root.on_checkbox_active(self.active)
 
 
-<ContentNavigationDrawer>:
-    orientation: "vertical"
-    padding: "8dp"
-    spacing: "8dp"
-
-    AnchorLayout:
-        anchor_x: "left"
-        size_hint_y: None
-        height: avatar.height
-
-        Image:
-            id: avatar
-            size_hint: None, None
-            size: "56dp", "56dp"
-            source: "kivymd_logo.png"
-
-    MDLabel:
-        text: "Polowy Family"
-        font_style: "Button"
-        size_hint_y: None
-        height: self.texture_size[1]
-
-    MDLabel:
-        text: "Some Content here"
-        font_style: "Caption"
-        size_hint_y: None
-        height: self.texture_size[1]
-
-    ScrollView:
-
-        DrawerList:
-            id: md_list
-
 
 <MainScreen>:
+    id: mainscreen
     AppContainer:
         canvas.before:
             Rectangle:
@@ -60,18 +28,60 @@
         orientation: 'vertical'
         MDToolbar:
             title: "Organizer 2020"
-            right_action_items: [["menu", lambda x: nav_drawer.toggle_nav_drawer()]]
-        MDTabs:
+            right_action_items: [["menu", lambda x: nav_drawer.set_state()]]
+        TabsContainer:
             id: tabs
-            font_style: 'H3'    
+            font_style: 'H1'    
 
             on_tab_switch: root.on_tab_switch(*args)
             background_normal: 0,0,0,0
     MDToolbar:
     MDFloatingActionButtonSpeedDial:
-        data: {"android": "add tab", "minus":"delete", "plus": "add note"}
+        data: {"android": "sync", "minus":"delete", "plus": "add note"}
         rotation_root_buton: True
         callback: root.callback_tab
         MDNavigationDrawer:
             id: nav_drawer
+            
+
+
             ContentNavigationDrawer:
+                orientation: "vertical"
+                padding: "8dp"
+                spacing: "8dp"
+
+                AnchorLayout:
+                    anchor_x: "left"
+                    size_hint_y: None
+
+                NavigationDrawerIconButton:
+                    icon: 'plus'
+                    text: 'Add new Tab'
+                    on_release: mainscreen.popup_new_tab()
+                NavigationDrawerIconButton:
+                    icon: 'minus'
+                    text: 'Delete Tab'
+
+                    on_release: tabs.remove_tab()
+                NavigationDrawerIconButton:
+                    icon: 'phone'
+                    text: '+91-7727XXXXXX'
+                NavigationDrawerIconButton:
+                    icon: 'cake'
+                    text: '26/11/1994'
+                MDLabel:
+                    text: "Polowy Family"
+                    font_style: "Button"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                MDLabel:
+                    text: "Some Content here"
+                    font_style: "Caption"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+
+                ScrollView:
+
+                    DrawerList:
+                        id: md_list:

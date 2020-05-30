@@ -17,16 +17,37 @@ import requests
 
 
 class Tabs(FloatLayout, MDTabsBase):
+    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
+    
 
 
 class DialogTabsContainer(BoxLayout):
     pass
 
+class TabsContainer(MDTabs):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    def remove_tab(self):
+
+        tab = MainScreen.tabs_list[MainScreen.tab_active_id]
+        self.remove_widget(tab)
+          
+
+        MainScreen.items_dict.pop(MainScreen.tab_active_id)
+       
+        MainScreen.mdlists_dict.pop(MainScreen.tab_active_id)
+        MainScreen.tabs_list.pop(MainScreen.tab_active_id)
 
 
+        print(MainScreen.items_dict)
+        print(MainScreen.tabs_list)
+        print(MainScreen.mdlists_dict)
+       
+        
+        print(MainScreen.tab_active_id)
+       
 
 class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
     
@@ -91,7 +112,19 @@ class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
 
 
 class ContentNavigationDrawer(BoxLayout):
-    pass
+    def on_start(self):
+        icons_item = {
+            "folder": "My files",
+            "account-multiple": "Shared with me",
+            "star": "Starred",
+            "history": "Recent",
+            "checkbox-marked": "Shared with me",
+            "upload": "Upload",
+        }
+        for icon_name in icons_item.keys():
+            self.root.ids.content_drawer.ids.md_list.add_widget(
+                ItemDrawer(icon=icon_name, text=icons_item[icon_name])
+            )
 
 class DrawerList(ThemableBehavior, MDList):
     def set_color_item(self, instance_item):
@@ -103,6 +136,11 @@ class DrawerList(ThemableBehavior, MDList):
                 item.text_color = self.theme_cls.text_color
                 break
         instance_item.text_color = self.theme_cls.primary_color
+
+class NavigationDrawerIconButton(OneLineAvatarIconListItem):
+    pass
+
+    
         
 class RightCheckBox(IRightBodyTouch, MDCheckbox):
     '''Custom right container.'''
@@ -120,7 +158,8 @@ class MainScreen(Screen):
     
     tab_active_id = ''
     dialog = None
-    tabs_list = []
+    tabs_list = {}
+
     mdlists_dict = {}
     selected_notes = []
     items_dict = dict({})
@@ -155,8 +194,8 @@ class MainScreen(Screen):
             self.tab = Tabs(text=obj.text)
             
             self.ids.tabs.add_widget(self.tab)
-        self.dialog.dismiss()
 
+        self.dialog.dismiss()
         a = {obj.text:{'_init':True}}
         data = json.dumps(a)
         tab_name_to_database = json.loads(data)
@@ -164,7 +203,7 @@ class MainScreen(Screen):
         requests.patch(url=NewApp.url, json=tab_name_to_database)
         sv = ScrollView()
         self.tab.add_widget(sv)
-        self.tabs_list.append(obj.text)
+        self.tabs_list[obj.text] = self.tab
         self.items_dict[obj.text] = {'_init':True}
         tab_name = MDList()
         sv.add_widget(tab_name)
@@ -201,6 +240,7 @@ class MainScreen(Screen):
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
         self.tab_active_id = tab_text
+        print(self.tab_active_id)
             
     def delete_selected_notes(self, selected_notes):
         for item in selected_notes:
@@ -213,7 +253,7 @@ class MainScreen(Screen):
                         
                         self.items_dict[key].pop(item.text)
                 self.remove_widget(item)
-
+   
 
 class NewApp(MDApp):
 
@@ -237,7 +277,7 @@ class NewApp(MDApp):
                 self.root.ids.tabs.add_widget(tab)
                 sv = ScrollView()
                 tab.add_widget(sv)
-                MainScreen.tabs_list.append(name_tab)
+                MainScreen.tabs_list[name_tab] = tab
                 tab_name = MDList()
                 sv.add_widget(tab_name)
                 MainScreen.mdlists_dict[name_tab] = tab_name
@@ -251,8 +291,10 @@ class NewApp(MDApp):
                             MainScreen.mdlists_dict[name_tab].add_widget(item)
                 MainScreen.items_dict[name_tab] = self.items_dict_list
                 print(MainScreen.items_dict)
+                MainScreen.tab_active_id = name_tab
         else:
             MainScreen.items_dict = {}
-                
+
+               
 
 NewApp().run()
