@@ -26,20 +26,18 @@
                 source: 'hd red cool vertical lines iphone 4 wallpapers backgrounds.jpg'
 
         orientation: 'vertical'
+        tabs: tabs.__self__
         MDToolbar:
             title: "Organizer 2020"
             right_action_items: [["menu", lambda x: nav_drawer.set_state()]]
         TabsContainer:
             id: tabs
             font_style: 'H1'    
-
-            on_tab_switch: root.on_tab_switch(*args)
+            allow_stretch: False
+            on_tab_switch: app.on_tab_switch(*args)
             background_normal: 0,0,0,0
-    MDToolbar:
-    MDFloatingActionButtonSpeedDial:
-        data: {"android": "sync", "minus":"delete", "plus": "add note"}
-        rotation_root_buton: True
-        callback: root.callback_tab
+            
+    
         MDNavigationDrawer:
             id: nav_drawer
             
@@ -65,7 +63,9 @@
                     on_release: tabs.remove_tab()
                 NavigationDrawerIconButton:
                     icon: 'phone'
-                    text: '+91-7727XXXXXX'
+                    text: 'clear'
+                    #on_release: tabs.clear_widgets()
+
                 NavigationDrawerIconButton:
                     icon: 'cake'
                     text: '26/11/1994'
@@ -85,3 +85,7 @@
 
                     DrawerList:
                         id: md_list:
+    MDFloatingActionButtonSpeedDial:
+        data: {"android": "sync", "minus":"delete", "plus": "add note"}
+        rotation_root_buton: True
+        callback: root.callback_tab

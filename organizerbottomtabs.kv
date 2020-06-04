@@ -1,0 +1,70 @@
+<DialogTabsContainer>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "70dp"
+    MDTextField:
+        id: dialog_text_field
+        hint_text: "start typing ..."
+
+<BottomNavigationItem>
+    background_normal: 0,0,0,0
+
+<ListItemWithCheckBox>
+    font_style: 'H6'    
+    font_size: '30dp'
+    RightCheckBox:
+        on_active: root.on_checkbox_active(self.active)
+
+
+<MainScreen>:
+    id: mainscreen
+    AppContainer:
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'hd red cool vertical lines iphone 4 wallpapers backgrounds.jpg'
+        orientation: 'vertical'
+        MDToolbar:
+            title: "Organizer 2020"
+            right_action_items: [["menu", lambda x: nav_drawer.set_state()]]
+                       
+        MDBottomNavigation:
+            id: panel
+
+    MDNavigationDrawer:
+        id: nav_drawer
+        
+        ContentNavigationDrawer:
+            orientation: "vertical"
+            padding: "8dp"
+            spacing: "8dp"
+
+            AnchorLayout:
+                anchor_x: "left"
+                size_hint_y: None
+
+            NavigationDrawerIconButton:
+                icon: 'plus'
+                text: 'Add new Tab'
+                on_release: mainscreen.popup_new_tab()
+            NavigationDrawerIconButton:
+                icon: 'minus'
+                text: 'Delete Tab'
+
+                on_release: app.remove_tab()
+            NavigationDrawerIconButton:
+                icon: 'phone'
+                text: 'clear'
+                on_release: app.remove_tab()
+
+            ScrollView:
+
+                DrawerList:
+                    id: md_list
+        
+    MDFloatingActionButtonSpeedDial:
+        data: {"android": "sync", "minus":"delete", "plus": "add note"}
+        rotation_root_buton: True
+        callback: root.callback_tab
