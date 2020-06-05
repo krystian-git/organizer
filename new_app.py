@@ -197,7 +197,7 @@ class MainScreen(Screen):
         
     def popup_new_note(self):
         if not self.dialog:
-            self.dialog = MDDialog(title='Add new note',
+            self.dialog = MDDialog(title=f'Add new note to {self.tab_active_id}',
                                 type='custom',
                                 size_hint=(.9, None),
                                 content_cls=DialogTabsContainer(),
@@ -208,7 +208,6 @@ class MainScreen(Screen):
         self.dialog.open()
         
     def add_note(self,instance):
-        print('_____________________',self.items_dict, '-------------------------')
        
         for obj in self.dialog.content_cls.children:
             self.item = ListItemWithCheckbox(text=obj.text)
