@@ -30,36 +30,22 @@ class TabsContainer(MDTabs):
         super().__init__(**kwargs)
 
 
-    """ def on_carousel_index(self, carousel, index):
-        print(self, carousel, index) """
-
-    def removeTab(self):
-        tab = MainScreen.tab_active_id
-        """ for i in self.tab_list:
-            if i.text == name:
-                tab = i
-                break """
-        if tab:
-            self.switch_to(self.default_tab)
-            self.remove_widget(tab)
-    
+       
     def remove_tab(self):
         print(MainScreen.tab_active_id, '_____________')
-        tab = MainScreen.tabs_list[MainScreen.tab_active_id]
-        print(tab)
-        print(MainScreen.tab_active_id, '+++++++++++++++++++')
-        MainScreen.items_dict.pop(MainScreen.tab_active_id)
-        print(MainScreen.tab_active_id)
-        del MainScreen.mdlists_dict[MainScreen.tab_active_id]
-        print(MainScreen.tab_active_id)
-        carous = self.children[1].children[0]
-        print(carous.slides)
+        if MainScreen.tab_active_id != '@General' and MainScreen.tab_active_id in MainScreen.items_dict:
+            tab = MainScreen.tabs_list[MainScreen.tab_active_id]
+            print(tab)
+            print(MainScreen.tab_active_id, '+++++++++++++++++++')
+            MainScreen.items_dict.pop(MainScreen.tab_active_id)
+            print(MainScreen.tab_active_id)
+            del MainScreen.mdlists_dict[MainScreen.tab_active_id]
+            print(MainScreen.tab_active_id)
+            carous = self.children[1].children[0]
+            print(carous.slides)
+            self.remove_widget(tab)
+
         
-       
-        self.remove_widget(tab)
-
-        #self.clear_widgets()
-
 class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
     
     dialog = None

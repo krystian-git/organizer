@@ -61,12 +61,7 @@
                 text: 'Delete Tab'
 
                 on_release: tabs.remove_tab()
-            NavigationDrawerIconButton:
-                icon: 'phone'
-                text: 'clear'
-                #on_release: tabs.clear_widgets()
-
-  
+             
             MDLabel:
                 text: "Polowy Family"
                 font_style: "Button"
@@ -84,6 +79,6 @@
                 DrawerList:
                     id: md_list:
     MDFloatingActionButtonSpeedDial:
-        data: {"android": "sync", "minus":"delete", "plus": "add note"}
+        data: {"minus":"Delete selected", "plus": "Add note"}
         rotation_root_buton: True
         callback: root.callback_tab
