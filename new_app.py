@@ -191,7 +191,7 @@ class MainScreen(Screen):
                 self.mdlists_dict[obj.text] = tab_name
                 self.tab_active_id = obj.text
             else:
-                Snackbar(text="You already have that tab", padding="20dp").show()
+                Snackbar(text="You already have that tab").show()
                 print('Already in')
                 self.dialog.dismiss()
         
