@@ -13,11 +13,16 @@ from kivymd.uix.behaviors import TouchBehavior
 from kivymd.theming import ThemableBehavior
 import json
 import requests
-from kivymd.uix.bottomnavigation import MDBottomNavigationItem
+from kivymd.uix.bottomnavigation import MDBottomNavigationItem, MDBottomNavigation, TabbedPanelBase
 
 
 
+class MDBottomNavigation(TabbedPanelBase):
+    def __init__(self,**kwargs):
+        super().__init__(**kwargs)
 
+    def current(self):
+        print(self)
     
    
 class DialogTabsContainer(BoxLayout):
@@ -25,14 +30,14 @@ class DialogTabsContainer(BoxLayout):
 
 
     def remove(self):
-        print(OrganizerBottomTabsApp.tab_active_id, '_____________')
-        tab = MainScreen.tabs_list[OrganizerBottomTabsApp.tab_active_id]
+        print(MainScreen.active_tab, '_____________')
+        tab = MainScreen.tabs_list[MainScreen.active_tab]
         print(tab)
-        print(OrganizerBottomTabsApp.tab_active_id, '+++++++++++++++++++')
-        MainScreen.items_dict.pop(OrganizerBottomTabsApp.tab_active_id)
-        print(OrganizerBottomTabsApp.tab_active_id)
-        del MainScreen.mdlists_dict[OrganizerBottomTabsApp.tab_active_id]
-        print(OrganizerBottomTabsApp.tab_active_id)
+        print(MainScreen.active_tab, '+++++++++++++++++++')
+        MainScreen.items_dict.pop(MainScreen.active_tab)
+        print(MainScreen.active_tab)
+        del MainScreen.mdlists_dict[MainScreen.active_tab]
+        print(MainScreen.active_tab)
         carous = self.children[1].children[0]
         print(carous.slides)
         
@@ -196,8 +201,7 @@ class MainScreen(Screen):
         print(tab_name)
         # add list name to list which we be referencing to add list_item
         self.mdlists_dict[obj.text] = tab_name
-        OrganizerBottomTabsApp.tab_active_id = obj.text
-        
+        print(self.mdlists_dict)
     def popup_new_note(self):
         self.dialog = MDDialog(title='Add new note',
                                 type='custom',
@@ -214,13 +218,13 @@ class MainScreen(Screen):
        
         for obj in self.dialog.content_cls.children:
             self.item = ListItemWithCheckbox(text=obj.text)
-            print(OrganizerBottomTabsApp.tab_active_id)
-            self.mdlists_dict[OrganizerBottomTabsApp.tab_active_id].add_widget(self.item)
+            print(self.active_tab)
+            self.mdlists_dict[self.active_tab.name].add_widget(self.item)
         self.dialog.dismiss()
                      
-        self.items_dict[OrganizerBottomTabsApp.tab_active_id][obj.text] = True
-        self.items_dict[OrganizerBottomTabsApp.tab_active_id]['_init'] = True
-        data = json.dumps({OrganizerBottomTabsApp.tab_active_id:self.items_dict[OrganizerBottomTabsApp.tab_active_id]})
+        self.items_dict[self.active_tab.name][obj.text] = True
+        self.items_dict[self.active_tab.name]['_init'] = True
+        data = json.dumps({MainScreen.active_tab.name:self.items_dict[MainScreen.active_tab.name]})
         item_to_database = json.loads(data)
 
         requests.patch(url=OrganizerBottomTabsApp.url, json=item_to_database)
@@ -237,8 +241,7 @@ class MainScreen(Screen):
                         
                         self.items_dict[key].pop(item.text)
                 self.remove_widget(item)
-   
-   
+  
 
 class OrganizerBottomTabsApp(MDApp):
 
@@ -252,7 +255,6 @@ class OrganizerBottomTabsApp(MDApp):
     
         self.theme_cls.primary_palette = "BlueGray"
         
-    
         return MainScreen()
 
     def on_start(self):
@@ -282,11 +284,7 @@ class OrganizerBottomTabsApp(MDApp):
         else:
             MainScreen.items_dict = {} 
 
-        
-
-    
-        
-
+          
     def remove_tab(self):
 
         print(MainScreen.mdlists_dict)
@@ -294,11 +292,14 @@ class OrganizerBottomTabsApp(MDApp):
         print(MainScreen.tabs_list)
         tab_id = MainScreen.active_tab
         print(tab_id)
-
-        for key, tab in MainScreen.tabs_list.items():
-            if key == tab_id.name:
-                print(key, ' deleted')
-                self.root.ids.panel.remove_widget(tab)
-                break 
+        if tab_id:
+            for tab_name, tab in MainScreen.tabs_list.items():
+                if tab_name == tab_id.name:
+                    print(tab_name, ' deleted')
+                    self.root.ids.panel.remove_widget(tab)
+                    MainScreen.items_dict.pop(tab_name)
+                    MainScreen.tabs_list.pop(tab_name)
+                    del MainScreen.mdlists_dict[tab_name]
+                    break 
 
 OrganizerBottomTabsApp().run()

@@ -23,7 +23,7 @@
             Rectangle:
                 pos: self.pos
                 size: self.size
-                source: 'hd red cool vertical lines iphone 4 wallpapers backgrounds.jpg'
+                source: 'Gory.jpg'
 
         orientation: 'vertical'
         tabs: tabs.__self__
@@ -38,53 +38,51 @@
             background_normal: 0,0,0,0
             
     
-        MDNavigationDrawer:
-            id: nav_drawer
+    MDNavigationDrawer:
+        id: nav_drawer
             
 
 
-            ContentNavigationDrawer:
-                orientation: "vertical"
-                padding: "8dp"
-                spacing: "8dp"
+        ContentNavigationDrawer:
+            orientation: "vertical"
+            padding: "8dp"
+            spacing: "8dp"
 
-                AnchorLayout:
-                    anchor_x: "left"
-                    size_hint_y: None
+            AnchorLayout:
+                anchor_x: "left"
+                size_hint_y: None
 
-                NavigationDrawerIconButton:
-                    icon: 'plus'
-                    text: 'Add new Tab'
-                    on_release: mainscreen.popup_new_tab()
-                NavigationDrawerIconButton:
-                    icon: 'minus'
-                    text: 'Delete Tab'
+            NavigationDrawerIconButton:
+                icon: 'plus'
+                text: 'Add new Tab'
+                on_release: mainscreen.popup_new_tab()
+            NavigationDrawerIconButton:
+                icon: 'minus'
+                text: 'Delete Tab'
 
-                    on_release: tabs.remove_tab()
-                NavigationDrawerIconButton:
-                    icon: 'phone'
-                    text: 'clear'
-                    #on_release: tabs.clear_widgets()
+                on_release: tabs.remove_tab()
+            NavigationDrawerIconButton:
+                icon: 'phone'
+                text: 'clear'
+                #on_release: tabs.clear_widgets()
 
-                NavigationDrawerIconButton:
-                    icon: 'cake'
-                    text: '26/11/1994'
-                MDLabel:
-                    text: "Polowy Family"
-                    font_style: "Button"
-                    size_hint_y: None
-                    height: self.texture_size[1]
+  
+            MDLabel:
+                text: "Polowy Family"
+                font_style: "Button"
+                size_hint_y: None
+                height: self.texture_size[1]
 
-                MDLabel:
-                    text: "Some Content here"
-                    font_style: "Caption"
-                    size_hint_y: None
-                    height: self.texture_size[1]
+            MDLabel:
+                text: "Some Content here"
+                font_style: "Caption"
+                size_hint_y: None
+                height: self.texture_size[1]
 
-                ScrollView:
+            ScrollView:
 
-                    DrawerList:
-                        id: md_list:
+                DrawerList:
+                    id: md_list:
     MDFloatingActionButtonSpeedDial:
         data: {"android": "sync", "minus":"delete", "plus": "add note"}
         rotation_root_buton: True

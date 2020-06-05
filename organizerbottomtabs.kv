@@ -8,11 +8,12 @@
         hint_text: "start typing ..."
 
 <BottomNavigationItem>
-    background_normal: 0,0,0,0
+    background_color: 0,0,0,0
 
 <ListItemWithCheckBox>
     font_style: 'H6'    
     font_size: '30dp'
+    
     RightCheckBox:
         on_active: root.on_checkbox_active(self.active)
 
@@ -32,7 +33,7 @@
                        
         MDBottomNavigation:
             id: panel
-
+            background_color: 0,0,0,0           
     MDNavigationDrawer:
         id: nav_drawer
         
@@ -57,7 +58,7 @@
             NavigationDrawerIconButton:
                 icon: 'phone'
                 text: 'clear'
-                on_release: app.remove_tab()
+                on_release: panel.clear_widgets()
 
             ScrollView:
 
