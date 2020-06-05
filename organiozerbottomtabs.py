@@ -60,7 +60,7 @@ class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
         else:
             MainScreen.selected_notes.remove(checkbox)
         
-    def on_long_touch(self, touch, *args):
+    def on_triple_tap(self, touch, *args):
         if not self.dialog:
             self.dialog = MDDialog(title='edit note',
                             type='custom',

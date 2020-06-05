@@ -1,3 +1,6 @@
+#:import Snackbar kivymd.uix.snackbar.Snackbar
+
+
 <DialogTabsContainer>
     orientation: "vertical"
     spacing: "12dp"
@@ -6,7 +9,7 @@
 
     MDTextField:
         id: dialog_text_field
-        hint_text: "start typing ..."
+        hint_text: "Start typing ..."
 
 <ListItemWithCheckBox>
     font_style: 'H6'    
@@ -61,6 +64,10 @@
                 text: 'Delete Tab'
 
                 on_release: tabs.remove_tab()
+            NavigationDrawerIconButton:
+                icon: 'android'
+                text: 'snackbar'
+                #on_release: Snackbar(text="This is a snackbar!").show()
              
             MDLabel:
                 text: "Polowy Family"

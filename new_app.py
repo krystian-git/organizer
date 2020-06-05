@@ -13,7 +13,7 @@ from kivymd.uix.behaviors import TouchBehavior
 from kivymd.theming import ThemableBehavior
 import json
 import requests
-
+from kivymd.uix.snackbar import Snackbar
 
 
 class Tabs(FloatLayout, MDTabsBase):
@@ -32,20 +32,15 @@ class TabsContainer(MDTabs):
 
        
     def remove_tab(self):
-        print(MainScreen.tab_active_id, '_____________')
+        
         if MainScreen.tab_active_id != '@General' and MainScreen.tab_active_id in MainScreen.items_dict:
             tab = MainScreen.tabs_list[MainScreen.tab_active_id]
-            print(tab)
-            print(MainScreen.tab_active_id, '+++++++++++++++++++')
-            MainScreen.items_dict.pop(MainScreen.tab_active_id)
-            print(MainScreen.tab_active_id)
+            del MainScreen.items_dict[MainScreen.tab_active_id]
             del MainScreen.mdlists_dict[MainScreen.tab_active_id]
-            print(MainScreen.tab_active_id)
-            carous = self.children[1].children[0]
-            print(carous.slides)
+            del MainScreen.tabs_list[MainScreen.tab_active_id]
             self.remove_widget(tab)
+            print(MainScreen.tabs_list)
 
-        
 class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
     
     dialog = None
@@ -60,7 +55,7 @@ class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
         else:
             MainScreen.selected_notes.remove(checkbox)
         
-    def on_long_touch(self, touch, *args):
+    def on_triple_tap(self, touch, *args):
         if not self.dialog:
             self.dialog = MDDialog(title='edit note',
                             type='custom',
@@ -73,10 +68,12 @@ class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
         for obj in self.dialog.content_cls.children:
             obj.text = self.text
             self.selected_item_text = obj.text
+            print('ok')
         self.dialog.open()
 
 
     def close(self, instance):
+        print('close')
         self.dialog.dismiss()
 
     def update_note(self, _instance):
@@ -132,10 +129,7 @@ class RightCheckBox(IRightBodyTouch, MDCheckbox):
 class AppContainer(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.tab = Tabs(text='czop')
-    """  self.tab = Tabs(text='czop') 
-    self.ids.tabs.add_widget(self.tab)
-    """
+   
 class MainScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -175,29 +169,35 @@ class MainScreen(Screen):
            
     def add_tab(self,instance):
         for obj in self.dialog.content_cls.children:
-            self.tab = Tabs(text=obj.text)
+            if obj.text not in MainScreen.tabs_list:
+                self.tab = Tabs(text=obj.text)
             
-            self.ids.tabs.add_widget(self.tab)
+                self.ids.tabs.add_widget(self.tab)
 
-        self.dialog.dismiss()
-        a = {obj.text:{'_init':True}}
-        data = json.dumps(a)
-        tab_name_to_database = json.loads(data)
-        print(tab_name_to_database)
-        requests.patch(url=NewApp.url, json=tab_name_to_database)
-        sv = ScrollView()
-        self.tab.add_widget(sv)
-        self.tabs_list[obj.text] = self.tab
-        self.items_dict[obj.text] = {'_init':True}
-        tab_name = MDList()
-        sv.add_widget(tab_name)
-        print(tab_name)
-        # add list name to list which we be referencing to add list_item
-        self.mdlists_dict[obj.text] = tab_name
-        self.tab_active_id = obj.text
+                self.dialog.dismiss()
+                a = {obj.text:{'_init':True}}
+                data = json.dumps(a)
+                tab_name_to_database = json.loads(data)
+                print(tab_name_to_database)
+                requests.patch(url=NewApp.url, json=tab_name_to_database)
+                sv = ScrollView()
+                self.tab.add_widget(sv)
+                self.tabs_list[obj.text] = self.tab
+                self.items_dict[obj.text] = {'_init':True}
+                tab_name = MDList()
+                sv.add_widget(tab_name)
+                print(tab_name)
+                # add list name to list which we be referencing to add list_item
+                self.mdlists_dict[obj.text] = tab_name
+                self.tab_active_id = obj.text
+            else:
+                Snackbar(text="You already have that tab", padding="20dp").show()
+                print('Already in')
+                self.dialog.dismiss()
         
     def popup_new_note(self):
-        self.dialog = MDDialog(title='Add new note',
+        if not self.dialog:
+            self.dialog = MDDialog(title='Add new note',
                                 type='custom',
                                 size_hint=(.9, None),
                                 content_cls=DialogTabsContainer(),
@@ -286,13 +286,10 @@ class NewApp(MDApp):
         print(instance_tabs)
         print(self)
 
-    def remove_tab(self, root):
-        """ self.ids.tabs.remove_widget(root) """
-        print(root)
+    
 
     def on_carousel_index(self, carousel, index):
         print(self, carousel, index)
 
-    #on_carousel_index(self, carousel, index)
-
+    
 NewApp().run()
