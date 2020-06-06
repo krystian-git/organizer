@@ -1,0 +1,70 @@
+<BoxContainer>:
+    orientation:'vertical'
+    
+    MDToolbar:
+        title: 'Just a simple App'
+        md_bg_color: 0, .4, .4, 1
+        specific_text_color: 1, 1, 1, 1
+    
+    MDBottomNavigation:
+        panel_color: 0, .4, .4, 1
+        specific_text_color: 1, 1, 1, 1
+       
+        MDBottomNavigationItem:
+            name: 'euro'
+            text: 'Euro'
+            icon: 'currency-eur'
+            BoxLayout:
+                spacing: 30
+                orientation: 'vertical'
+                rows:4
+                Label:
+                    id: oil
+                    font_size: 30
+                    color: 0,0,0,1
+                    text: 'Few widgets here shortly'
+                    center_x: self.center_x
+                Label:
+                    id: oil_price
+                    font_size: 32
+
+                    color: 0,0,0,1
+                    text: ''
+                    center_x: self.center_x
+                MDFillRoundFlatButton:
+                    text: 'Check how much for carosene!'
+                    size_hint_y: None
+                    height:80
+                    pos_hint: {'center_x': .5}
+                    md_bg_color: .4, .4, .4, 1
+                    on_release: root.oilprice()
+                Label:
+                    text:''
+                    size_hint_y: None
+                    height: 40
+        
+        MDBottomNavigationItem:
+            
+            name: 'covid'
+            text: 'Covid'
+            icon: 'biohazard'
+            on_enter: root.tables()
+            on_leave: root.table_reset()
+            BoxLayout:
+                cols: 1
+                id: covids
+                text: ''
+                halign: 'center'
+
+
+        MDBottomNavigationItem:
+            name: 'netflix'
+            text: 'Netflix'
+            icon: 'netflix'
+            
+            BoxLayout:
+                id: netflix
+                Label:
+                    text: 'You will find here Netflix shortly ...'
+                    font_size: 30
+                    color: 0,0,0,1

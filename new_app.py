@@ -40,6 +40,13 @@ class TabsContainer(MDTabs):
             del MainScreen.tabs_list[MainScreen.tab_active_id]
             self.remove_widget(tab)
             print(MainScreen.tabs_list)
+        elif MainScreen.tab_active_id not in MainScreen.items_dict:
+            Snackbar(text=f"There's no {MainScreen.tab_active_id} anymore").show()
+        elif MainScreen.tab_active_id == '@General':
+            Snackbar(text=f"You have no rights to delete {MainScreen.tab_active_id}").show()
+
+
+
 
 class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
     
@@ -196,14 +203,14 @@ class MainScreen(Screen):
                 self.dialog.dismiss()
         
     def popup_new_note(self):
-        if not self.dialog:
-            self.dialog = MDDialog(title=f'Add new note to {self.tab_active_id}',
-                                type='custom',
-                                size_hint=(.9, None),
-                                content_cls=DialogTabsContainer(),
-                                buttons=[MDFlatButton(text='ADD', on_release=self.add_note),
-                                MDFlatButton(text='CANCEL', on_release=self.close)]
-                                )
+        
+        self.dialog = MDDialog(title=f'Add new note to {self.tab_active_id}',
+                            type='custom',
+                            size_hint=(.9, None),
+                            content_cls=DialogTabsContainer(),
+                            buttons=[MDFlatButton(text='ADD', on_release=self.add_note),
+                            MDFlatButton(text='CANCEL', on_release=self.close)]
+                            )
         self.dialog.set_normal_height()
         self.dialog.open()
         
@@ -272,9 +279,10 @@ class NewApp(MDApp):
                             MainScreen.mdlists_dict[name_tab].add_widget(item)
                 MainScreen.items_dict[name_tab] = self.items_dict_list
                 print(MainScreen.items_dict)
-                MainScreen.tab_active_id = name_tab
         else:
             MainScreen.items_dict = {}
+        MainScreen.tab_active_id = '@General'
+
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
         MainScreen.tab_active_id = tab_text
