@@ -14,7 +14,7 @@ from kivymd.theming import ThemableBehavior
 import json
 import requests
 from kivymd.uix.snackbar import Snackbar
-
+from kivymd.uix.navigationdrawer import NavigationLayout
 
 class Tabs(FloatLayout, MDTabsBase):
     
@@ -138,6 +138,9 @@ class AppContainer(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
    
+class NavLayout(NavigationLayout):
+    pass
+
 class MainScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -244,7 +247,7 @@ class MainScreen(Screen):
    
    
 
-class NewApp(MDApp):
+class DrawerApp(MDApp):
 
     items_dict_list = {}
     url = 'https://taskator12.firebaseio.com/.json'
@@ -255,7 +258,7 @@ class NewApp(MDApp):
     
         self.theme_cls.primary_palette = "BlueGray"
 
-        return MainScreen()
+        
 
     def on_start(self):
         if self.database:
@@ -263,7 +266,8 @@ class NewApp(MDApp):
                 #self.items_dict_list[name_tab] = {}
                 self.items_dict_list = {}
                 tab = Tabs(text=name_tab)
-                self.root.ids.tabs.add_widget(tab)
+                tabbb = TabsContainer()
+                tabbb.add_widget(tab)
                 sv = ScrollView()
                 tab.add_widget(sv)
                 MainScreen.tabs_list[name_tab] = tab
@@ -300,4 +304,4 @@ class NewApp(MDApp):
         print(self, carousel, index)
 
     
-NewApp().run()
+DrawerApp().run()

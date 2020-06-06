@@ -1,4 +1,28 @@
 #:import Snackbar kivymd.uix.snackbar.Snackbar
+<MainScreen>:
+    id: mainscreen
+    name: 'mainscreen'
+    AppContainer:
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'Gory.jpg'
+
+        orientation: 'vertical'
+        
+        TabsContainer:
+            id: tabs
+            font_style: 'H1'    
+            allow_stretch: False
+            on_tab_switch: app.on_tab_switch(*args)
+            background_normal: 0,0,0,0
+            
+
+    MDFloatingActionButtonSpeedDial:
+        data: {"minus":"Delete selected", "plus": "Add note"}
+        rotation_root_buton: True
+        callback: root.callback_tab
 
 
 <DialogTabsContainer>
@@ -18,33 +42,14 @@
         on_active: root.on_checkbox_active(self.active)
 
 
-
-<MainScreen>:
-    id: mainscreen
-    AppContainer:
-        canvas.before:
-            Rectangle:
-                pos: self.pos
-                size: self.size
-                source: 'Gory.jpg'
-
-        orientation: 'vertical'
-        tabs: tabs.__self__
-        MDToolbar:
-            title: "Organizer 2020"
-            right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
-        TabsContainer:
-            id: tabs
-            font_style: 'H1'    
-            allow_stretch: False
-            on_tab_switch: app.on_tab_switch(*args)
-            background_normal: 0,0,0,0
-            
-    
+NavigationLayout:
+    MDToolbar:
+        title: "Organizer 2020"
+        right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+        elevation: 10
+        pos_hint: {"top": 1}
     MDNavigationDrawer:
         id: nav_drawer
-            
-
 
         ContentNavigationDrawer:
             orientation: "vertical"
@@ -82,11 +87,16 @@
                 size_hint_y: None
                 height: self.texture_size[1]
 
-            ScrollView:
+            
+            
+    ScreenManager:
+        id: screen_manager
 
-                DrawerList:
-                    id: md_list:
-    MDFloatingActionButtonSpeedDial:
-        data: {"minus":"Delete selected", "plus": "Add note"}
-        rotation_root_buton: True
-        callback: root.callback_tab
+        Screen:
+            name: 'mainscreen'
+            MDLabel:
+                text: 'ok'
+        Screen:
+            name: "screen2"
+            MDLabel:
+                    text: 'Screen 2'

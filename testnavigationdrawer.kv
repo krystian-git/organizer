@@ -1,0 +1,52 @@
+
+    
+
+
+NavigationLayout:
+    MDToolbar:
+        title: "Organizer 2020"
+        right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+        pos_hint: {"top": 1}
+        elevation: 10
+    MDNavigationDrawer:
+        id: nav_drawer
+
+        MDList:
+
+            OneLineListItem:
+                text: "Screen 1"
+                on_press:
+                    nav_drawer.set_state("close")
+                    screen_manager.current = "scr 1"
+
+            OneLineListItem:
+                text: "Screen 2"
+                on_press:
+                    nav_drawer.set_state("close")
+                    screen_manager.current = "scr 2"
+    ScreenManager:
+        id: screen_manager
+
+        Screen:
+            name: "scr 1"
+
+            MDLabel:
+                text: 'Screen 1'
+                
+                
+            MDFloatingActionButtonSpeedDial:
+                data: {"minus":"Delete selected", "plus": "Add note"}
+                rotation_buton: True
+                
+
+        Screen:
+            name: "scr 2"
+
+            BoxLayout:
+                
+                MDLabel:
+                    text: 'Screen 2'
+                
+                
+                
+        

@@ -14,14 +14,14 @@ from kivymd.theming import ThemableBehavior
 import json
 import requests
 from kivymd.uix.snackbar import Snackbar
-
+from kivymd.uix.navigationdrawer import NavigationLayout
 
 class Tabs(FloatLayout, MDTabsBase):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
     
-   
+
 class DialogTabsContainer(BoxLayout):
     pass
 
@@ -104,8 +104,8 @@ class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
                         item_to_database = json.loads(data)
                         print(item_to_database)
                         
-                        requests.patch(url=NewApp.url, json=item_to_database)
-                        #requests.delete(url=NewApp.url[:-5]+tab+'/'+self.selected_item_text+'.json')
+                        requests.patch(url=MyApp.url, json=item_to_database)
+                        #requests.delete(url=MyApp.url[:-5]+tab+'/'+self.selected_item_text+'.json')
 
 
 
@@ -115,8 +115,8 @@ class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
 class ContentNavigationDrawer(BoxLayout):
     pass
 
-class DrawerList(ThemableBehavior, MDList):
-    """ def set_color_item(self, instance_item):
+class DrawerList(ThemableBehavior, MDList):"""
+    def set_color_item(self, instance_item):
         '''Called when tap on a menu item.'''
 
         # Set the color of the icon and text for the menu item.
@@ -126,7 +126,7 @@ class DrawerList(ThemableBehavior, MDList):
                 break
         instance_item.text_color = self.theme_cls.primary_color
     """
-    pass
+pass
 class NavigationDrawerIconButton(OneLineAvatarIconListItem):
     pass
 
@@ -138,6 +138,7 @@ class AppContainer(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
    
+
 class MainScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -187,7 +188,7 @@ class MainScreen(Screen):
                 data = json.dumps(a)
                 tab_name_to_database = json.loads(data)
                 print(tab_name_to_database)
-                requests.patch(url=NewApp.url, json=tab_name_to_database)
+                requests.patch(url=MyApp.url, json=tab_name_to_database)
                 sv = ScrollView()
                 self.tab.add_widget(sv)
                 self.tabs_list[obj.text] = self.tab
@@ -227,7 +228,7 @@ class MainScreen(Screen):
         data = json.dumps({self.tab_active_id:self.items_dict[self.tab_active_id]})
         item_to_database = json.loads(data)
 
-        requests.patch(url=NewApp.url, json=item_to_database)
+        requests.patch(url=MyApp.url, json=item_to_database)
 
             
     def delete_selected_notes(self, selected_notes):
@@ -237,14 +238,14 @@ class MainScreen(Screen):
                     if item == child:
                         print('delte item: ',item)
                         value.remove_widget(child)
-                        requests.delete(url=NewApp.url[:-5]+key+'/'+item.text+'.json')
+                        requests.delete(url=MyApp.url[:-5]+key+'/'+item.text+'.json')
                         
                         self.items_dict[key].pop(item.text)
                 self.remove_widget(item)
    
-   
+    
 
-class NewApp(MDApp):
+class MyApp(MDApp):
 
     items_dict_list = {}
     url = 'https://taskator12.firebaseio.com/.json'
@@ -255,14 +256,15 @@ class NewApp(MDApp):
     
         self.theme_cls.primary_palette = "BlueGray"
 
-        return MainScreen()
-
+     
+    
     def on_start(self):
         if self.database:
             for name_tab, item_name in self.database.items():
                 #self.items_dict_list[name_tab] = {}
                 self.items_dict_list = {}
                 tab = Tabs(text=name_tab)
+                tabbb = TabsContainer()
                 self.root.ids.tabs.add_widget(tab)
                 sv = ScrollView()
                 tab.add_widget(sv)
@@ -283,7 +285,7 @@ class NewApp(MDApp):
         else:
             MainScreen.items_dict = {}
         MainScreen.tab_active_id = '@General'
-
+    
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
         MainScreen.tab_active_id = tab_text
@@ -294,10 +296,7 @@ class NewApp(MDApp):
         print(instance_tabs)
         print(self)
 
-    
 
-    def on_carousel_index(self, carousel, index):
-        print(self, carousel, index)
 
     
-NewApp().run()
+MyApp().run()

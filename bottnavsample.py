@@ -1,9 +1,8 @@
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
-
+from kivymd.uix.screen import Screen
 from kivymd.app import MDApp
-
 KV = '''
 <ContentNavigationDrawer>:
 
@@ -24,7 +23,7 @@ KV = '''
                     root.screen_manager.current = "scr 2"
 
 
-Screen:
+MainScreen:
 
     MDToolbar:
         id: toolbar
@@ -63,13 +62,10 @@ Screen:
 
 
 class ContentNavigationDrawer(BoxLayout):
-    screen_manager = ObjectProperty()
-    nav_drawer = ObjectProperty()
+    pass
 
+class TestNavigationDrawerApp(MDApp):
+    
+    pass
 
-class TestNavigationDrawer(MDApp):
-    def build(self):
-        return Builder.load_string(KV)
-
-
-TestNavigationDrawer().run()
+TestNavigationDrawerApp().run()
