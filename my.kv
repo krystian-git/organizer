@@ -51,17 +51,26 @@ Screen:
                     rotation_root_buton: True
                     callback: self.parent.callback_tab
 
-            Screen:
-                name: "scr 2"
-                MDLabel:
-                    text: 'Screen 2'
-                MDToolbar:
-                    id: toolbar
-                    pos_hint: {"top": 1}
-                    elevation: 10
-                    title: "MDNavigationDrawer"
-                    right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+            CovidScreen:
+                id: covidscreen
+                name: "covidscreen"
+                on_enter: covidscontainer.tables()
+                
+                CovidsContainer:
+                    id: covidscontainer
+                    cols: 1
+                    orientation: 'vertical'
+                    MDToolbar:
+                        id: toolbar
+                        pos_hint: {"top": 1}
+                        elevation: 11
+                        title: "MDNavigationDrawer"
+                        right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
           
+               
+                        
+                    
+                
         MDNavigationDrawer:
             id: nav_drawer
             ContentNavigationDrawer:
@@ -71,7 +80,7 @@ Screen:
                 padding: "8dp"
                 spacing: "8dp"
                 Image: 
-                    source: 'stock-vector-hand-drawing-sketch-vector-illustration-of-organizer-or-planner-with-pencil-100806397.jpg'
+                    source: 'stock.jpg'
                     size: self.texture_size
 
                 MDLabel:
@@ -115,7 +124,7 @@ Screen:
                         theme_text_color: "Custom"
                         on_release:
                             nav_drawer.set_state("close")
-                            screen_manager.current = "scr 2"
+                            screen_manager.current = "covidscreen"
                         IconLeftWidget:
                             icon: "biohazard"
                             theme_text_color: "Custom"

@@ -16,6 +16,10 @@ import requests
 from kivymd.uix.snackbar import Snackbar
 from kivymd.uix.navigationdrawer import NavigationLayout
 from kivy.properties import StringProperty
+import pandas as pd
+from kivymd.uix.datatables import MDDataTable
+from kivy.metrics import dp
+
 class Tabs(FloatLayout, MDTabsBase):
     
     def __init__(self, **kwargs):
@@ -244,6 +248,59 @@ class MainScreen(Screen):
                         self.items_dict[key].pop(item.text)
                 self.remove_widget(item)
    
+
+list_covid = pd.read_csv('https://opendata.ecdc.europa.eu/covid19/casedistribution/csv')
+countries_grouped = list_covid.groupby('countriesAndTerritories')[['deaths','cases']]\
+                    .sum().sort_values('deaths', ascending=False).head(20)
+countries_list = countries_grouped.index.to_list()
+countries_deaths = countries_grouped.deaths.to_list()
+countries_cases = countries_grouped.cases.to_list()
+
+class CovidsContainer(BoxLayout):
+
+
+    def tables(self):
+        
+        data_tables = MDDataTable(
+            size_hint=(1, 1),
+            use_pagination=True,
+            check=True,
+            rows_num = 15,
+            sort = True,
+            column_data=[
+                ("Country", dp(60)),
+                ("Deaths", dp(20)),
+                ("Cases", dp(20)),
+                ],
+            row_data=[
+                (country.replace('_', ' '), death, case)
+                for country, death, case in zip(countries_list,  countries_deaths, countries_cases)
+            ],
+        )
+        data_tables.bind(on_row_press=self.on_row_press)
+        data_tables.bind(on_check_press=self.on_check_press)
+        self.add_widget(data_tables)
+    """ def on_start(self):
+        self.data_tables.open() """
+    def table_reset(self):
+        table_container = self.ids.covids
+        table_container.clear_widgets()
+    
+    def on_row_press(self, instance_table, instance_row):
+        '''Called when a table row is clicked.'''
+
+        print(instance_table, instance_row)
+
+    def on_check_press(self, instance_table, current_row):
+        '''Called when the check box in the table row is checked.'''
+
+        print(instance_table, current_row)
+class CovidScreen(Screen):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+        
     
 
 class MyApp(MDApp):
@@ -286,7 +343,7 @@ class MyApp(MDApp):
         else:
             MainScreen.items_dict = {}
         MainScreen.tab_active_id = '@General'
-    
+        
 
     def on_tab_switch(self, instance_tabs, instance_tab, instance_tab_label, tab_text):
         MainScreen.tab_active_id = tab_text
