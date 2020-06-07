@@ -1,0 +1,32 @@
+[INFO   ] Logger: Record log in /storage/emulated/0/organizer/.kivy/logs/kivy_20-06-05_50.txt
+[INFO   ] Kivy: v1.11.0.dev0, git-8b6af30, 20190320
+[INFO   ] Python: v3.7.2 (default, Mar 20 2019, 15:02:54) 
+[GCC 8.2.0]
+[INFO   ] KivyMD: v0.104.1
+[INFO   ] Factory: 184 symbols loaded
+[INFO   ] Image: Providers: img_tex, img_dds, img_sdl2, img_pil, img_gif (img_ffpyplayer ignored)
+[INFO   ] Window: Provider: sdl2
+[INFO   ] GL: Using the "OpenGL ES 2" graphics system
+[INFO   ] GL: Backend used <sdl2>
+[INFO   ] GL: OpenGL version <b'OpenGL ES 3.2 V@331.0 (GIT@50f1b2d, I1b05bd271c) (Date:04/09/19)'>
+[INFO   ] GL: OpenGL vendor <b'Qualcomm'>
+[INFO   ] GL: OpenGL renderer <b'Adreno (TM) 505'>
+[INFO   ] GL: OpenGL parsed version: 3, 2
+[INFO   ] GL: Texture max size <16384>
+[INFO   ] GL: Texture max units <16>
+[INFO   ] Window: auto add sdl2 input provider
+[INFO   ] Window: virtual keyboard not allowed, single mode, not docked
+[INFO   ] Text: Provider: sdl2
+[INFO   ] GL: NPOT texture support is available
+[WARNING] stderr: Traceback (most recent call last):
+[WARNING] stderr:   File "/storage/emulated/0/organizer/new_app.py", line 295, in <module>
+[WARNING] stderr:     NewApp().run()
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/app.py", line 800, in run
+[WARNING] stderr:     root = self.build()
+[WARNING] stderr:   File "/storage/emulated/0/organizer/new_app.py", line 249, in build
+[WARNING] stderr:     self.theme_cls.primary_palette = "BlueGrey"
+[WARNING] stderr:   File "kivy/properties.pyx", line 483, in kivy.properties.Property.__set__
+[WARNING] stderr:   File "kivy/properties.pyx", line 521, in kivy.properties.Property.set
+[WARNING] stderr:   File "kivy/properties.pyx", line 512, in kivy.properties.Property.set
+[WARNING] stderr:   File "kivy/properties.pyx", line 1228, in kivy.properties.OptionProperty.check
+[WARNING] stderr: ValueError: ThemeManager.primary_palette is set to an invalid option 'BlueGrey'. Must be one of: ['Red', 'Pink', 'Purple', 'DeepPurple', 'Indigo', 'Blue', 'LightBlue', 'Cyan', 'Teal', 'Green', 'LightGreen', 'Lime', 'Yellow', 'Amber', 'Orange', 'DeepOrange', 'Brown', 'Gray', 'BlueGray']

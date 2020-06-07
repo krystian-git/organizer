@@ -1,0 +1,61 @@
+[INFO   ] Logger: Record log in /storage/emulated/0/organizer/.kivy/logs/kivy_20-06-05_4.txt
+[INFO   ] Kivy: v1.11.0.dev0, git-8b6af30, 20190320
+[INFO   ] Python: v3.7.2 (default, Mar 20 2019, 15:02:54) 
+[GCC 8.2.0]
+[INFO   ] KivyMD: v0.104.1
+[INFO   ] Factory: 184 symbols loaded
+[INFO   ] Image: Providers: img_tex, img_dds, img_sdl2, img_pil, img_gif (img_ffpyplayer ignored)
+[INFO   ] Window: Provider: sdl2
+[INFO   ] GL: Using the "OpenGL ES 2" graphics system
+[INFO   ] GL: Backend used <sdl2>
+[INFO   ] GL: OpenGL version <b'OpenGL ES 3.2 V@331.0 (GIT@50f1b2d, I1b05bd271c) (Date:04/09/19)'>
+[INFO   ] GL: OpenGL vendor <b'Qualcomm'>
+[INFO   ] GL: OpenGL renderer <b'Adreno (TM) 505'>
+[INFO   ] GL: OpenGL parsed version: 3, 2
+[INFO   ] GL: Texture max size <16384>
+[INFO   ] GL: Texture max units <16>
+[INFO   ] Window: auto add sdl2 input provider
+[INFO   ] Window: virtual keyboard not allowed, single mode, not docked
+[INFO   ] Text: Provider: sdl2
+[INFO   ] GL: NPOT texture support is available
+[WARNING] stderr: Traceback (most recent call last):
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/lang/builder.py", line 648, in _apply_rule
+[WARNING] stderr:     raise AttributeError(key)
+[WARNING] stderr: AttributeError: release
+[WARNING] stderr: 
+[WARNING] stderr: During handling of the above exception, another exception occurred:
+[WARNING] stderr: 
+[WARNING] stderr: Traceback (most recent call last):
+[WARNING] stderr:   File "/storage/emulated/0/organizer/organiozerbottomtabs.py", line 304, in <module>
+[WARNING] stderr:     OrganizerBottomTabsApp().run()
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/app.py", line 825, in run
+[WARNING] stderr:     self.dispatch('on_start')
+[WARNING] stderr:   File "kivy/_event.pyx", line 707, in kivy._event.EventDispatcher.dispatch
+[WARNING] stderr:   File "/storage/emulated/0/organizer/organiozerbottomtabs.py", line 263, in on_start
+[WARNING] stderr:     tab = BottomNavigationItem(name=name_tab, text=name_tab)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivymd/uix/bottomnavigation.py", line 387, in __init__
+[WARNING] stderr:     super().__init__(**kwargs)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/uix/relativelayout.py", line 265, in __init__
+[WARNING] stderr:     super(RelativeLayout, self).__init__(**kw)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/uix/floatlayout.py", line 65, in __init__
+[WARNING] stderr:     super(FloatLayout, self).__init__(**kwargs)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/uix/layout.py", line 76, in __init__
+[WARNING] stderr:     super(Layout, self).__init__(**kwargs)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/uix/widget.py", line 348, in __init__
+[WARNING] stderr:     Builder.apply(self, ignored_consts=self._kwargs_applied_init)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/lang/builder.py", line 469, in apply
+[WARNING] stderr:     self._apply_rule(widget, rule, rule, ignored_consts=ignored_consts)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/lang/builder.py", line 657, in _apply_rule
+[WARNING] stderr:     '{}: {}'.format(e.__class__.__name__, e), cause=tb)
+[WARNING] stderr: kivy.lang.builder.BuilderException: Parser: File "/storage/emulated/0/organizer/organizerbottomtabs.kv", line 11:
+[WARNING] stderr: ...
+[WARNING] stderr:       9:
+[WARNING] stderr:      10:<BottomNavigationItem>:
+[WARNING] stderr: >>   11:	on_release: print('ok')
+[WARNING] stderr:      12:    
+[WARNING] stderr:      13:<ListItemWithCheckBox>
+[WARNING] stderr: ...
+[WARNING] stderr: AttributeError: release
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/lang/builder.py", line 648, in _apply_rule
+[WARNING] stderr:     raise AttributeError(key)
+[WARNING] stderr: 

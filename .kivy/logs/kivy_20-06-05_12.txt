@@ -1,0 +1,77 @@
+[INFO   ] Logger: Record log in /storage/emulated/0/organizer/.kivy/logs/kivy_20-06-05_12.txt
+[INFO   ] Kivy: v1.11.0.dev0, git-8b6af30, 20190320
+[INFO   ] Python: v3.7.2 (default, Mar 20 2019, 15:02:54) 
+[GCC 8.2.0]
+[INFO   ] KivyMD: v0.104.1
+[INFO   ] Factory: 184 symbols loaded
+[INFO   ] Image: Providers: img_tex, img_dds, img_sdl2, img_pil, img_gif (img_ffpyplayer ignored)
+[INFO   ] Window: Provider: sdl2
+[INFO   ] GL: Using the "OpenGL ES 2" graphics system
+[INFO   ] GL: Backend used <sdl2>
+[INFO   ] GL: OpenGL version <b'OpenGL ES 3.2 V@331.0 (GIT@50f1b2d, I1b05bd271c) (Date:04/09/19)'>
+[INFO   ] GL: OpenGL vendor <b'Qualcomm'>
+[INFO   ] GL: OpenGL renderer <b'Adreno (TM) 505'>
+[INFO   ] GL: OpenGL parsed version: 3, 2
+[INFO   ] GL: Texture max size <16384>
+[INFO   ] GL: Texture max units <16>
+[INFO   ] Window: auto add sdl2 input provider
+[INFO   ] Window: virtual keyboard not allowed, single mode, not docked
+[INFO   ] Text: Provider: sdl2
+[INFO   ] GL: NPOT texture support is available
+[WARNING] stderr: Traceback (most recent call last):
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/lang/builder.py", line 623, in _apply_rule
+[WARNING] stderr:     setattr(widget_set, key, value)
+[WARNING] stderr:   File "kivy/weakproxy.pyx", line 33, in kivy.weakproxy.WeakProxy.__setattr__
+[WARNING] stderr:   File "kivy/properties.pyx", line 483, in kivy.properties.Property.__set__
+[WARNING] stderr:   File "kivy/properties.pyx", line 521, in kivy.properties.Property.set
+[WARNING] stderr:   File "kivy/properties.pyx", line 512, in kivy.properties.Property.set
+[WARNING] stderr:   File "kivy/properties.pyx", line 1228, in kivy.properties.OptionProperty.check
+[WARNING] stderr: ValueError: ListItemWithCheckbox.font_style is set to an invalid option 'Body'. Must be one of: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'Subtitle1', 'Subtitle2', 'Body1', 'Body2', 'Button', 'Caption', 'Overline', 'Icon']
+[WARNING] stderr: 
+[WARNING] stderr: During handling of the above exception, another exception occurred:
+[WARNING] stderr: 
+[WARNING] stderr: Traceback (most recent call last):
+[WARNING] stderr:   File "/storage/emulated/0/organizer/new_app.py", line 312, in <module>
+[WARNING] stderr:     NewApp().run()
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/app.py", line 825, in run
+[WARNING] stderr:     self.dispatch('on_start')
+[WARNING] stderr:   File "kivy/_event.pyx", line 707, in kivy._event.EventDispatcher.dispatch
+[WARNING] stderr:   File "/storage/emulated/0/organizer/new_app.py", line 286, in on_start
+[WARNING] stderr:     item = ListItemWithCheckbox(text=items)
+[WARNING] stderr:   File "/storage/emulated/0/organizer/new_app.py", line 68, in __init__
+[WARNING] stderr:     super().__init__(**kwargs)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivymd/uix/list.py", line 953, in __init__
+[WARNING] stderr:     super().__init__(**kwargs)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivymd/uix/list.py", line 881, in __init__
+[WARNING] stderr:     super().__init__(**kwargs)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivymd/theming.py", line 907, in __init__
+[WARNING] stderr:     super().__init__(**kwargs)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/uix/behaviors/button.py", line 121, in __init__
+[WARNING] stderr:     super(ButtonBehavior, self).__init__(**kwargs)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/uix/floatlayout.py", line 65, in __init__
+[WARNING] stderr:     super(FloatLayout, self).__init__(**kwargs)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/uix/layout.py", line 76, in __init__
+[WARNING] stderr:     super(Layout, self).__init__(**kwargs)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/uix/widget.py", line 348, in __init__
+[WARNING] stderr:     Builder.apply(self, ignored_consts=self._kwargs_applied_init)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/lang/builder.py", line 469, in apply
+[WARNING] stderr:     self._apply_rule(widget, rule, rule, ignored_consts=ignored_consts)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/lang/builder.py", line 630, in _apply_rule
+[WARNING] stderr:     e), cause=tb)
+[WARNING] stderr: kivy.lang.builder.BuilderException: Parser: File "/storage/emulated/0/organizer/new.kv", line 12:
+[WARNING] stderr: ...
+[WARNING] stderr:      10:
+[WARNING] stderr:      11:<ListItemWithCheckBox>
+[WARNING] stderr: >>   12:    font_style: 'Body'    
+[WARNING] stderr:      13:    font_size: '30dp'
+[WARNING] stderr:      14:    RightCheckBox:
+[WARNING] stderr: ...
+[WARNING] stderr: ValueError: ListItemWithCheckbox.font_style is set to an invalid option 'Body'. Must be one of: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'Subtitle1', 'Subtitle2', 'Body1', 'Body2', 'Button', 'Caption', 'Overline', 'Icon']
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/lang/builder.py", line 623, in _apply_rule
+[WARNING] stderr:     setattr(widget_set, key, value)
+[WARNING] stderr:   File "kivy/weakproxy.pyx", line 33, in kivy.weakproxy.WeakProxy.__setattr__
+[WARNING] stderr:   File "kivy/properties.pyx", line 483, in kivy.properties.Property.__set__
+[WARNING] stderr:   File "kivy/properties.pyx", line 521, in kivy.properties.Property.set
+[WARNING] stderr:   File "kivy/properties.pyx", line 512, in kivy.properties.Property.set
+[WARNING] stderr:   File "kivy/properties.pyx", line 1228, in kivy.properties.OptionProperty.check
+[WARNING] stderr: 

@@ -10,7 +10,7 @@
         hint_text: "Start typing ..."
 
 <ListItemWithCheckBox>
-    font_style: 'H6'    
+    font_style: 'Body1'    
     font_size: '30dp'
     RightCheckBox:
         on_active: root.on_checkbox_active(self.active)
@@ -41,10 +41,14 @@ Screen:
           
                     TabsContainer:
                         id: tabs
-                        font_style: 'H1'    
+                        text_color_normal: 1,1,1,1
+                        font_style: 'H5'    
                         allow_stretch: False
                         on_tab_switch: app.on_tab_switch(*args)
-                        background_normal: 0,0,0,0
+                        background_normal: 1,1,1,1
+                        text_color_active: 0,0,0,1
+                        color_indicator: 0,0,0,1
+                        tab_indicator_height: "4dp"
                                             
                 MDFloatingActionButtonSpeedDial:
                     data: {"tab-minus":"Delete List", "tab-plus":"Add New List","sticker-minus-outline":"Delete Selected", "sticker-plus-outline": "Add New Note"}
@@ -55,6 +59,7 @@ Screen:
                 id: covidscreen
                 name: "covidscreen"
                 on_enter: covidscontainer.tables()
+                on_leave: covidscontainer.table_reset()
                 CovidsContainer:
                     cols:1
                     orientation: 'vertical'
@@ -104,7 +109,7 @@ Screen:
                     text: "Organizer 2020"
                     size_hint_y: None
                     halign: "center"
-                    font_size: "30dp" 
+                    font_size: "26dp" 
                     height: self.texture_size[0]
                     
                 MDList:
