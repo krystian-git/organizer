@@ -4,6 +4,7 @@ from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.tab import MDTabsBase, MDTabs
 from kivymd.uix.floatlayout import FloatLayout
 from kivymd.uix.boxlayout import BoxLayout
+from kivymd.uix.gridlayout import GridLayout
 from kivymd.uix.screen import Screen
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
@@ -248,6 +249,9 @@ class MainScreen(Screen):
                         self.items_dict[key].pop(item.text)
                 self.remove_widget(item)
    
+class CaroseneScreen(Screen):
+    pass
+
 
 list_covid = pd.read_csv('https://opendata.ecdc.europa.eu/covid19/casedistribution/csv')
 countries_grouped = list_covid.groupby('countriesAndTerritories')[['deaths','cases']]\
