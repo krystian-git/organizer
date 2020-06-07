@@ -22,7 +22,7 @@ Screen:
             id: screen_manager
 
             MainScreen:
-                name: "scr 1"
+                name: "mainscreen"
                 id: mainscreen
                 AppContainer:
                     canvas.before:
@@ -47,7 +47,7 @@ Screen:
                         background_normal: 0,0,0,0
                                             
                 MDFloatingActionButtonSpeedDial:
-                    data: {"minus":"Delete selected", "plus": "Add note"}
+                    data: {"tab-minus":"Delete List", "tab-plus":"Add New List","sticker-minus-outline":"Delete Selected", "sticker-plus-outline": "Add New Note"}
                     rotation_root_buton: True
                     callback: self.parent.callback_tab
 
@@ -65,20 +65,71 @@ Screen:
         MDNavigationDrawer:
             id: nav_drawer
             ContentNavigationDrawer:
+
                 id: content_drawer
-                
+                orientation: "vertical"
+                padding: "8dp"
+                spacing: "8dp"
+                Image: 
+                    source: 'stock-vector-hand-drawing-sketch-vector-illustration-of-organizer-or-planner-with-pencil-100806397.jpg'
+                    size: self.texture_size
+
+                MDLabel:
+                    text: "Organizer 2020"
+                    size_hint_y: None
+                    halign: "center"
+                    font_size: "30dp" 
+                    height: self.texture_size[0]
+                    
                 MDList:
-
-                    OneLineListItem:
-                        text: "Screen 1"
-                        on_press:
+                    
+                    ItemDrawer:
+                        text: "TODO Lists"
+                        theme_text_color: "Custom"
+                        on_release:
                             nav_drawer.set_state("close")
-                            screen_manager.current = "scr 1"
-
-                    OneLineListItem:
-                        text: "Screen 2"
-                        on_press:
+                            screen_manager.current = "mainscreen"
+                        IconLeftWidget:
+                            icon: "format-list-checks"
+                            theme_text_color: "Custom"
+                    ItemDrawer:
+                        text: "Carosene Price / Euro Rate"
+                        theme_text_color: "Custom"
+                        on_release:
                             nav_drawer.set_state("close")
                             screen_manager.current = "scr 2"
-            
-     
+                        IconLeftWidget:
+                            icon: "gas-station"
+                            theme_text_color: "Custom"
+                    ItemDrawer:
+                        text: "Weather"
+                        theme_text_color: "Custom"
+                        on_release:
+                            nav_drawer.set_state("close")
+                            screen_manager.current = "scr 2"
+                        IconLeftWidget:
+                            icon: "weather-partly-cloudy"
+                            theme_text_color: "Custom"
+                    ItemDrawer:
+                        text: "Covid Stats"
+                        theme_text_color: "Custom"
+                        on_release:
+                            nav_drawer.set_state("close")
+                            screen_manager.current = "scr 2"
+                        IconLeftWidget:
+                            icon: "biohazard"
+                            theme_text_color: "Custom"
+                MDLabel:
+                        
+                    size_hint_y: .1
+                       
+                MDList:
+                    ItemDrawer:
+                        text: "Contact Us"
+                        theme_text_color: "Custom"
+                        on_release:
+                            nav_drawer.set_state("close")
+                            screen_manager.current = "scr 2"
+                        IconLeftWidget:
+                            icon: "email-send-outline"
+                            theme_text_color: "Custom"

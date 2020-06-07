@@ -1,5 +1,5 @@
 from kivymd.app import MDApp
-from kivymd.uix.list import IRightBodyTouch, OneLineAvatarIconListItem
+from kivymd.uix.list import IRightBodyTouch, OneLineIconListItem, OneLineAvatarIconListItem
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.tab import MDTabsBase, MDTabs
 from kivymd.uix.floatlayout import FloatLayout
@@ -15,7 +15,7 @@ import json
 import requests
 from kivymd.uix.snackbar import Snackbar
 from kivymd.uix.navigationdrawer import NavigationLayout
-
+from kivy.properties import StringProperty
 class Tabs(FloatLayout, MDTabsBase):
     
     def __init__(self, **kwargs):
@@ -130,7 +130,8 @@ pass
 class NavigationDrawerIconButton(OneLineAvatarIconListItem):
     pass
 
-            
+class ItemDrawer(OneLineIconListItem):
+    icon = StringProperty()     
 class RightCheckBox(IRightBodyTouch, MDCheckbox):
     '''Custom right container.'''
 
@@ -169,11 +170,11 @@ class MainScreen(Screen):
         self.dialog.dismiss()
     
     def callback_tab(self, instance):
-        if instance.icon == 'android':
+        if instance.icon == 'tab-plus':
             self.popup_new_tab()
-        elif instance.icon == 'plus':
+        elif instance.icon == 'sticker-plus-outline':
             self.popup_new_note()
-        elif instance.icon ==  'minus':
+        elif instance.icon ==  'sticker-minus-outline':
             self.delete_selected_notes(self.selected_notes)
            
     def add_tab(self,instance):
