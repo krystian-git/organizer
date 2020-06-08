@@ -54,6 +54,7 @@ Screen:
                     data: {"tab-minus":"Delete List", "tab-plus":"Add New List","sticker-minus-outline":"Delete Selected", "sticker-plus-outline": "Add New Note"}
                     rotation_root_buton: True
                     callback: self.parent.callback_tab
+                    hint_animation: True
 
             CovidScreen:
                 id: covidscreen
@@ -77,22 +78,68 @@ Screen:
                 name: "carosenescreen"
                 
                 BoxLayout:
-                    cols:1
-                    orientation: "vertical"
+                    padding: "10dp"
+                    spacing: "10dp"
+                    orientation:"vertical"
+                    canvas.before:
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                            source: 'Gory.jpg'
+                    
+                    MDCard:
+                        orientation: "vertical"
+                        padding: "10dp"
+                        spacing: "10dp"
+                        size_hint: None, None
+                        size: (300, 100)
+                        pos_hint: {"center_x": .5}  
+                        MDLabel:
+                            text: "Oil Price"
+                            theme_text_color: "Secondary"
+                            size_hint_y: None
+                            height: self.texture_size[1]
+
+                        MDSeparator:
+                            height: "2dp"
+
+                        MDLabel:
+                            text: "The Cheapest Oil You Find around is ..."
+                   
                     MDToolbar:
                         id: toolbar
                         pos_hint: {"top": 1}
                         elevation: 11
                         title: "Organizer 2020"
                         right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
-                   
+            
+
+            JokeScreen:
+                name: "jokescreen"
+                id: jokescreen
+                MDToolbar:
+                    id: toolbar
+                    pos_hint: {"top": 1}
+                    elevation: 11
+                    title: "Organizer 2020"
+                    right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+        
+                MDCard:
+                    orientation: "vertical"
+                    size_hint: None, None
+                    size: "380dp", "120dp"
+                    spacing: "20dp"
+                    padding: "10dp"
+                    pos_hint: {"center_x": .5, "center_y": .6}
                     MDLabel:
-                        text: 'ok'       
-          
-               
+                        text: "Oil Price"
+                        theme_text_color: "Secondary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                        pos_hint: {"center_x":.5, "top":1}
+                    MDRaisedButton:
+                        text: "Refresh"
                         
-                    
-                
         MDNavigationDrawer:
             id: nav_drawer
             ContentNavigationDrawer:
@@ -137,7 +184,7 @@ Screen:
                         theme_text_color: "Custom"
                         on_release:
                             nav_drawer.set_state("close")
-                            screen_manager.current = "scr 2"
+                            screen_manager.current = "jokescreen"
                         IconLeftWidget:
                             icon: "weather-partly-cloudy"
                             theme_text_color: "Custom"

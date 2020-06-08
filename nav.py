@@ -303,7 +303,8 @@ class CovidScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
     
-        
+class JokeScreen(Screen):
+    pass      
     
 
 class MyApp(MDApp):
@@ -317,7 +318,7 @@ class MyApp(MDApp):
     
         self.theme_cls.primary_palette = "BlueGray"
 
-     
+        
     
     def on_start(self):
         if self.database:
