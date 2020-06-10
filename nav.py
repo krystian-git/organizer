@@ -46,22 +46,7 @@ class TabsContainer(MDTabs):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def remove_tab(self,tabie):
-        
-        if MainScreen.tab_active_id != '@General' and MainScreen.tab_active_id in MainScreen.items_dict:
-            tab = MainScreen.tabs_list[MainScreen.tab_active_id]
-            del MainScreen.items_dict[MainScreen.tab_active_id]
-            del MainScreen.mdlists_dict[MainScreen.tab_active_id]
-            del MainScreen.tabs_list[MainScreen.tab_active_id]
-            print(tab)
-            print(tabie)
-            self.remove_widget(tabie)
-            print(MainScreen.tabs_list)
-        elif MainScreen.tab_active_id not in MainScreen.items_dict:
-            Snackbar(text=f"There's no {MainScreen.tab_active_id} anymore").show()
-        elif MainScreen.tab_active_id == '@General':
-            Snackbar(text=f"You have no rights to delete {MainScreen.tab_active_id}").show()
-
+    
 
 class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
     
@@ -102,14 +87,15 @@ class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
         for obj in self.dialog.content_cls.children:
             print(obj)
             if validate_input(obj.text):
-                self.text = obj.text
+                new_text = validate_input(obj.text)
+                self.text = new_text
                 print(MainScreen.items_dict)
                 for tab, parent in MainScreen.mdlists_dict.items():
                     for child in parent.children:
                         if child == self:
                             print(tab, parent, child)
                             MainScreen.items_dict[tab].pop(self.selected_item_text)
-                            MainScreen.items_dict[tab][obj.text] = True
+                            MainScreen.items_dict[tab][new_text] = True
                             MainScreen.items_dict[tab]['_init'] = True
 
                 
@@ -191,10 +177,9 @@ class MainScreen(Screen):
     def callback_tab(self, instance):
         if instance.icon == 'tab-plus':
             self.popup_new_tab()
-        
         elif instance.icon == 'tab-minus':
             tabs_container= TabsContainer()
-            tabs_container.remove_tab(self.instance_tab_obj)
+            self.remove_tab()
         elif instance.icon == 'sticker-plus-outline':
             self.popup_new_note()
         elif instance.icon ==  'sticker-minus-outline':
@@ -205,27 +190,28 @@ class MainScreen(Screen):
             print(key,value)
         for obj in self.dialog.content_cls.children:
             if validate_input(obj.text):
-                if obj.text not in MainScreen.tabs_list:
-                    self.tab = Tabs(text=obj.text)
+                new_text = validate_input(obj.text)
+                if new_text not in MainScreen.tabs_list:
+                    self.tab = Tabs(text=new_text)
                     
                     self.tabs.add_widget(self.tab)
 
                     self.dialog.dismiss()
-                    a = {obj.text:{'_init':True}}
+                    a = {new_text:{'_init':True}}
                     data = json.dumps(a)
                     tab_name_to_database = json.loads(data)
                     print(tab_name_to_database)
                     requests.patch(url=MyApp.url, json=tab_name_to_database)
                     sv = ScrollView()
                     self.tab.add_widget(sv)
-                    self.tabs_list[obj.text] = self.tab
-                    self.items_dict[obj.text] = {'_init':True}
+                    self.tabs_list[new_text] = self.tab
+                    self.items_dict[new_text] = {'_init':True}
                     tab_name = MDList()
                     sv.add_widget(tab_name)
                     print(tab_name)
                     # add list name to list which we be referencing to add list_item
-                    self.mdlists_dict[obj.text] = tab_name
-                    self.tab_active_id = obj.text
+                    self.mdlists_dict[new_text] = tab_name
+                    self.tab_active_id = new_text
                 else:
                     Snackbar(text="You already have that tab").show()
                     print('Already in')
@@ -249,14 +235,15 @@ class MainScreen(Screen):
        
         for obj in self.dialog.content_cls.children:
             if validate_input(obj.text):
-                self.item = ListItemWithCheckbox(text=obj.text)
+                new_text = validate_input(obj.text)
+                self.item = ListItemWithCheckbox(text=new_text)
                 self.mdlists_dict[self.tab_active_id].add_widget(self.item)
             else:
                 Snackbar(text="Note CAN NOT be empty").show()
 
         self.dialog.dismiss()
                      
-        self.items_dict[self.tab_active_id][obj.text] = True
+        self.items_dict[self.tab_active_id][new_text] = True
         self.items_dict[self.tab_active_id]['_init'] = True
         data = json.dumps({self.tab_active_id:self.items_dict[self.tab_active_id]})
         item_to_database = json.loads(data)
@@ -276,6 +263,25 @@ class MainScreen(Screen):
                         self.items_dict[key].pop(item.text)
                 self.remove_widget(item)
    
+    def remove_tab(self):
+        
+        if MainScreen.tab_active_id != '@General' and MainScreen.tab_active_id in MainScreen.items_dict:
+            tab = MainScreen.tabs_list[MainScreen.tab_active_id]
+            del self.items_dict[MainScreen.tab_active_id]
+            del self.mdlists_dict[MainScreen.tab_active_id]
+            del self.tabs_list[MainScreen.tab_active_id]
+            print(tab)
+            
+            print(self)
+            self.tabs.remove_widget(tab)
+            print(MainScreen.tabs_list)
+        elif self.tab_active_id not in self.items_dict:
+            Snackbar(text=f"There's no {self.tab_active_id} anymore").show()
+        elif self.tab_active_id == '@General':
+            Snackbar(text=f"You have no rights to delete {self.tab_active_id}").show()
+
+
+
 class CaroseneScreen(Screen):
     pass
 
