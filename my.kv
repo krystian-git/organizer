@@ -75,9 +75,9 @@ Screen:
                     elevation: 11
                     title: "Organizer 2020"
                     right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
-            CaroseneScreen:
-                id: carosenescreen  
-                name: "carosenescreen"
+            JokeScreen:
+                id: jokescreen  
+                name: "jokescreen"
                 
                 BoxLayout:
                     padding: "10dp"
@@ -116,9 +116,9 @@ Screen:
                         right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
             
 
-            JokeScreen:
-                name: "jokescreen"
-                id: jokescreen
+            CaroseneScreen:
+                name: "carosenescreen"
+                id: carosenescreen
                 MDToolbar:
                     id: toolbar
                     pos_hint: {"top": 1}
@@ -132,7 +132,7 @@ Screen:
                     size: "380dp", "120dp"
                     spacing: "20dp"
                     padding: "10dp"
-                    pos_hint: {"center_x": .5, "center_y": .6}
+                    pos_hint: {"center_x": .5, "center_y": .8}
                     MDLabel:
                         text: "Cheapest Oil in Ballina: Jones Oil - " + app.oil_price + " /1000L"
                         theme_text_color: "Secondary"

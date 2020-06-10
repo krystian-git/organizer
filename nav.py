@@ -101,27 +101,29 @@ class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
     def update_note(self, _instance):
         for obj in self.dialog.content_cls.children:
             print(obj)
-            self.text = obj.text
-            print(MainScreen.items_dict)
-            for tab, parent in MainScreen.mdlists_dict.items():
-                for child in parent.children:
-                    if child == self:
-                        print(tab, parent, child)
-                        MainScreen.items_dict[tab].pop(self.selected_item_text)
-                        MainScreen.items_dict[tab][obj.text] = True
-                        MainScreen.items_dict[tab]['_init'] = True
+            if validate_input(obj.text):
+                self.text = obj.text
+                print(MainScreen.items_dict)
+                for tab, parent in MainScreen.mdlists_dict.items():
+                    for child in parent.children:
+                        if child == self:
+                            print(tab, parent, child)
+                            MainScreen.items_dict[tab].pop(self.selected_item_text)
+                            MainScreen.items_dict[tab][obj.text] = True
+                            MainScreen.items_dict[tab]['_init'] = True
 
-            
-                        print(self.selected_item_text)
-                        print(MainScreen.items_dict)
-                        data = json.dumps({tab:MainScreen.items_dict[tab]})
-                        print(data)
-                        item_to_database = json.loads(data)
-                        print(item_to_database)
-                        
-                        requests.patch(url=MyApp.url, json=item_to_database)
-                        #requests.delete(url=MyApp.url[:-5]+tab+'/'+self.selected_item_text+'.json')
-
+                
+                            print(self.selected_item_text)
+                            print(MainScreen.items_dict)
+                            data = json.dumps({tab:MainScreen.items_dict[tab]})
+                            print(data)
+                            item_to_database = json.loads(data)
+                            print(item_to_database)
+                            
+                            requests.patch(url=MyApp.url, json=item_to_database)
+            else:
+                Snackbar(text="Note CAN NOT be empty").show()
+                
 
 
         self.dialog.dismiss()
@@ -202,31 +204,34 @@ class MainScreen(Screen):
         for key,value in self.ids:
             print(key,value)
         for obj in self.dialog.content_cls.children:
-            if obj.text not in MainScreen.tabs_list:
-                self.tab = Tabs(text=obj.text)
-                
-                self.tabs.add_widget(self.tab)
+            if validate_input(obj.text):
+                if obj.text not in MainScreen.tabs_list:
+                    self.tab = Tabs(text=obj.text)
+                    
+                    self.tabs.add_widget(self.tab)
 
-                self.dialog.dismiss()
-                a = {obj.text:{'_init':True}}
-                data = json.dumps(a)
-                tab_name_to_database = json.loads(data)
-                print(tab_name_to_database)
-                requests.patch(url=MyApp.url, json=tab_name_to_database)
-                sv = ScrollView()
-                self.tab.add_widget(sv)
-                self.tabs_list[obj.text] = self.tab
-                self.items_dict[obj.text] = {'_init':True}
-                tab_name = MDList()
-                sv.add_widget(tab_name)
-                print(tab_name)
-                # add list name to list which we be referencing to add list_item
-                self.mdlists_dict[obj.text] = tab_name
-                self.tab_active_id = obj.text
+                    self.dialog.dismiss()
+                    a = {obj.text:{'_init':True}}
+                    data = json.dumps(a)
+                    tab_name_to_database = json.loads(data)
+                    print(tab_name_to_database)
+                    requests.patch(url=MyApp.url, json=tab_name_to_database)
+                    sv = ScrollView()
+                    self.tab.add_widget(sv)
+                    self.tabs_list[obj.text] = self.tab
+                    self.items_dict[obj.text] = {'_init':True}
+                    tab_name = MDList()
+                    sv.add_widget(tab_name)
+                    print(tab_name)
+                    # add list name to list which we be referencing to add list_item
+                    self.mdlists_dict[obj.text] = tab_name
+                    self.tab_active_id = obj.text
+                else:
+                    Snackbar(text="You already have that tab").show()
+                    print('Already in')
+                    self.dialog.dismiss()
             else:
-                Snackbar(text="You already have that tab").show()
-                print('Already in')
-                self.dialog.dismiss()
+                Snackbar(text="List name CAN NOT be empty").show()
         
     def popup_new_note(self):
         
@@ -243,8 +248,12 @@ class MainScreen(Screen):
     def add_note(self,instance):
        
         for obj in self.dialog.content_cls.children:
-            self.item = ListItemWithCheckbox(text=obj.text)
-            self.mdlists_dict[self.tab_active_id].add_widget(self.item)
+            if validate_input(obj.text):
+                self.item = ListItemWithCheckbox(text=obj.text)
+                self.mdlists_dict[self.tab_active_id].add_widget(self.item)
+            else:
+                Snackbar(text="Note CAN NOT be empty").show()
+
         self.dialog.dismiss()
                      
         self.items_dict[self.tab_active_id][obj.text] = True
