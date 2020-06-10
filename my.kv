@@ -134,13 +134,14 @@ Screen:
                     padding: "10dp"
                     pos_hint: {"center_x": .5, "center_y": .6}
                     MDLabel:
-                        text: "Oil Price"
+                        text: "Cheapest Oil in Ballina: Jones Oil - " + app.oil_price + " /1000L"
                         theme_text_color: "Secondary"
                         size_hint_y: None
                         height: self.texture_size[1]
                         pos_hint: {"center_x":.5, "top":1}
                     MDRaisedButton:
                         text: "Refresh"
+                        pos_hint: {"center_x":.5}
                         
         MDNavigationDrawer:
             id: nav_drawer

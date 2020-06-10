@@ -21,7 +21,11 @@ import pandas as pd
 from kivymd.uix.datatables import MDDataTable
 from kivy.metrics import dp
 
-
+# geting oil price from jonesoil / ballina
+r = requests.post('https://jonesoil.ie/api/get_banded_oil_prices/product/1/quantity/1000',\
+                          headers={"User-Agent":"Mozilla/5.0"})
+oil = json.loads(r.text)
+oil_price = oil['real_price']
 
 def validate_input(string):
     text_after = string.strip()
@@ -322,6 +326,9 @@ class JokeScreen(Screen):
     
 
 class MyApp(MDApp):
+
+
+    oil_price = oil_price
 
     items_dict_list = {}
     url = 'https://taskator12.firebaseio.com/.json'
