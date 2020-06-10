@@ -16,10 +16,17 @@ import json
 import requests
 from kivymd.uix.snackbar import Snackbar
 from kivymd.uix.navigationdrawer import NavigationLayout
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ObjectProperty
 import pandas as pd
 from kivymd.uix.datatables import MDDataTable
 from kivy.metrics import dp
+
+
+
+def validate_input(string):
+    text_after = string.strip()
+    return text_after
+
 
 class Tabs(FloatLayout, MDTabsBase):
     
@@ -31,26 +38,25 @@ class DialogTabsContainer(BoxLayout):
     pass
 
 class TabsContainer(MDTabs):
+    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-
-       
-    def remove_tab(self):
+    def remove_tab(self,tabie):
         
         if MainScreen.tab_active_id != '@General' and MainScreen.tab_active_id in MainScreen.items_dict:
             tab = MainScreen.tabs_list[MainScreen.tab_active_id]
             del MainScreen.items_dict[MainScreen.tab_active_id]
             del MainScreen.mdlists_dict[MainScreen.tab_active_id]
             del MainScreen.tabs_list[MainScreen.tab_active_id]
-            self.remove_widget(tab)
+            print(tab)
+            print(tabie)
+            self.remove_widget(tabie)
             print(MainScreen.tabs_list)
         elif MainScreen.tab_active_id not in MainScreen.items_dict:
             Snackbar(text=f"There's no {MainScreen.tab_active_id} anymore").show()
         elif MainScreen.tab_active_id == '@General':
             Snackbar(text=f"You have no rights to delete {MainScreen.tab_active_id}").show()
-
-
 
 
 class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
@@ -148,7 +154,9 @@ class AppContainer(BoxLayout):
 class MainScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-    
+
+
+    tabs = ObjectProperty(None)
     tab_active_id = ''
     dialog = None
     tabs_list = {}
@@ -177,17 +185,23 @@ class MainScreen(Screen):
     def callback_tab(self, instance):
         if instance.icon == 'tab-plus':
             self.popup_new_tab()
+        
+        elif instance.icon == 'tab-minus':
+            tabs_container= TabsContainer()
+            tabs_container.remove_tab(self.instance_tab_obj)
         elif instance.icon == 'sticker-plus-outline':
             self.popup_new_note()
         elif instance.icon ==  'sticker-minus-outline':
             self.delete_selected_notes(self.selected_notes)
            
     def add_tab(self,instance):
+        for key,value in self.ids:
+            print(key,value)
         for obj in self.dialog.content_cls.children:
             if obj.text not in MainScreen.tabs_list:
                 self.tab = Tabs(text=obj.text)
-            
-                self.ids.tabs.add_widget(self.tab)
+                
+                self.tabs.add_widget(self.tab)
 
                 self.dialog.dismiss()
                 a = {obj.text:{'_init':True}}
@@ -267,7 +281,7 @@ class CovidsContainer(BoxLayout):
         
         data_tables = MDDataTable(
             size_hint=(1, 1),
-            use_pagination=True,
+            #use_pagination=True,
             check=True,
             rows_num = 30,
             sort = True,
@@ -353,12 +367,6 @@ class MyApp(MDApp):
         MainScreen.tab_active_id = tab_text
         MainScreen.instance_tab_obj = instance_tab
         print(MainScreen.tab_active_id)
-        print(instance_tab)
-        print(instance_tab_label)
-        print(instance_tabs)
-        print(self)
 
 
-
-    
 MyApp().run()
