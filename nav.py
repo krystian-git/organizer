@@ -180,9 +180,9 @@ class MainScreen(Screen):
         elif instance.icon == 'tab-minus':
             tabs_container= TabsContainer()
             self.remove_tab()
-        elif instance.icon == 'sticker-plus-outline':
+        elif instance.icon == 'plus':
             self.popup_new_note()
-        elif instance.icon ==  'sticker-minus-outline':
+        elif instance.icon ==  'minus':
             self.delete_selected_notes(self.selected_notes)
            
     def add_tab(self,instance):
@@ -270,11 +270,9 @@ class MainScreen(Screen):
             del self.items_dict[MainScreen.tab_active_id]
             del self.mdlists_dict[MainScreen.tab_active_id]
             del self.tabs_list[MainScreen.tab_active_id]
-            print(tab)
-            
-            print(self)
             self.tabs.remove_widget(tab)
-            print(MainScreen.tabs_list)
+            requests.delete(url=MyApp.url[:-5]+MainScreen.tab_active_id+".json")
+            self.tab_active_id = "@General"
         elif self.tab_active_id not in self.items_dict:
             Snackbar(text=f"There's no {self.tab_active_id} anymore").show()
         elif self.tab_active_id == '@General':

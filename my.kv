@@ -12,6 +12,7 @@
 <ListItemWithCheckBox>
     font_style: 'Body1'    
     font_size: '30dp'
+    halign: "left"
     RightCheckBox:
         on_active: root.on_checkbox_active(self.active)
 
@@ -53,7 +54,7 @@ Screen:
                         tab_indicator_height: "4dp"
                                             
                 MDFloatingActionButtonSpeedDial:
-                    data: {"tab-minus":"Delete List", "tab-plus":"Add New List","sticker-minus-outline":"Delete Selected", "sticker-plus-outline": "Add New Note"}
+                    data: {"tab-minus":"Delete List", "tab-plus":"Add New List","minus":"Delete Selected", "plus": "Add New Note"}
                     rotation_root_buton: True
                     callback: self.parent.callback_tab
                     hint_animation: True
