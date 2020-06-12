@@ -12,8 +12,9 @@
 <ListItemWithCheckBox>
     font_style: 'Body1'    
     font_size: '30dp'
-    halign: "left"
-    RightCheckBox:
+    
+    CheckboxLeftWidget:
+        
         on_active: root.on_checkbox_active(self.active)
 
 
@@ -118,30 +119,61 @@ Screen:
             CaroseneScreen:
                 name: "carosenescreen"
                 id: carosenescreen
-                MDToolbar:
-                    id: toolbar
-                    pos_hint: {"top": 1}
-                    elevation: 11
-                    title: "Organizer 2020"
-                    right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
-        
-                MDCard:
+                oil: oil
+                joke: joke
+                on_enter:   oil.text = self.oil_price
+                BoxLayout:
                     orientation: "vertical"
-                    size_hint: None, None
-                    size: "380dp", "120dp"
-                    spacing: "20dp"
-                    padding: "10dp"
-                    pos_hint: {"center_x": .5, "center_y": .8}
-                    MDLabel:
-                        text: "Cheapest Oil in Ballina: Jones Oil - " + app.oil_price + " /1000L"
-                        theme_text_color: "Secondary"
-                        size_hint_y: None
-                        height: self.texture_size[1]
-                        pos_hint: {"center_x":.5, "top":1}
-                    MDRaisedButton:
-                        text: "Refresh"
-                        pos_hint: {"center_x":.5}
-                        
+                    cols: 1
+                    MDToolbar:
+                        id: toolbar
+                        pos_hint: {"top": 1}
+                        elevation: 11
+                        title: "Organizer 2020"
+                        right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+                    
+                    ScrollView:
+                        pos_hint: {'top': 1.0 - toolbar.height / self.parent.height}
+                        size:self.parent.size
+                        BoxLayout:
+                            cols:1
+                            orientation: "vertical"
+                            MDCard:
+                                orientation: "vertical"
+                                size_hint: None, None
+                                size: "380dp", "120dp"
+                                spacing: "20dp"
+                                padding: "10dp"
+                                pos_hint: {"center_x": .5, "top": .8}
+                                MDLabel:
+                                    id: oil
+                                    text: ""
+                                    theme_text_color: "Secondary"
+                                    size_hint_y: None
+                                    height: self.texture_size[1]
+                                    pos_hint: {"center_x":.5, "top":1}
+                                MDRaisedButton:
+                                    text: "Refresh"
+                                    pos_hint: {"center_x":.5}
+
+                            MDCard:
+                                orientation: "vertical"
+                                size_hint: None, None
+                                size: "380dp", "120dp"
+                                spacing: "20dp"
+                                padding: "10dp"
+                                pos_hint: {"center_x": .5, "top": .4}
+                                MDLabel:
+                                    id: joke
+                                    text: ""
+                                    theme_text_color: "Secondary"
+                                    size_hint_y: None
+                                    height: self.texture_size[1]
+                                    pos_hint: {"center_x":.5, "top":1}
+                                MDRaisedButton:
+                                    text: "Refresh"
+                                    pos_hint: {"center_x":.5}
+                            
         MDNavigationDrawer:
             id: nav_drawer
             ContentNavigationDrawer:

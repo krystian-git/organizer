@@ -1,5 +1,5 @@
 from kivymd.app import MDApp
-from kivymd.uix.list import IRightBodyTouch, OneLineIconListItem, OneLineAvatarIconListItem
+from kivymd.uix.list import IRightBodyTouch, OneLineIconListItem,OneLineAvatarListItem, OneLineAvatarIconListItem, OneLineRightIconListItem
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.tab import MDTabsBase, MDTabs
 from kivymd.uix.floatlayout import FloatLayout
@@ -9,7 +9,7 @@ from kivymd.uix.screen import Screen
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
 from kivy.uix.scrollview import ScrollView
-from kivymd.uix.list import MDList
+from kivymd.uix.list import MDList, IconRightWidget
 from kivymd.uix.behaviors import TouchBehavior
 from kivymd.theming import ThemableBehavior
 import json
@@ -21,11 +21,6 @@ import pandas as pd
 from kivymd.uix.datatables import MDDataTable
 from kivy.metrics import dp
 
-# geting oil price from jonesoil / ballina
-r = requests.post('https://jonesoil.ie/api/get_banded_oil_prices/product/1/quantity/1000',\
-                          headers={"User-Agent":"Mozilla/5.0"})
-oil = json.loads(r.text)
-oil_price = oil['real_price']
 
 def validate_input(string):
     text_after = string.strip()
@@ -46,9 +41,12 @@ class TabsContainer(MDTabs):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+class CheckboxLeftWidget(IRightBodyTouch, MDCheckbox):
+    '''Custom right container.'''
+
     
 
-class ListItemWithCheckbox(OneLineAvatarIconListItem, TouchBehavior):
+class ListItemWithCheckbox(OneLineRightIconListItem, TouchBehavior):
     
     dialog = None
     
@@ -135,8 +133,6 @@ class NavigationDrawerIconButton(OneLineAvatarIconListItem):
 
 class ItemDrawer(OneLineIconListItem):
     icon = StringProperty()     
-class RightCheckBox(IRightBodyTouch, MDCheckbox):
-    '''Custom right container.'''
 
 class AppContainer(BoxLayout):
     def __init__(self, **kwargs):
@@ -178,8 +174,7 @@ class MainScreen(Screen):
         if instance.icon == 'tab-plus':
             self.popup_new_tab()
         elif instance.icon == 'tab-minus':
-            tabs_container= TabsContainer()
-            self.remove_tab()
+            self.remove_tab_popup()
         elif instance.icon == 'plus':
             self.popup_new_note()
         elif instance.icon ==  'minus':
@@ -262,8 +257,17 @@ class MainScreen(Screen):
                         
                         self.items_dict[key].pop(item.text)
                 self.remove_widget(item)
-   
-    def remove_tab(self):
+    def remove_tab_popup(self):
+        self.dialog = MDDialog(title=f'Do You want to DELETE {self.tab_active_id}?',
+                            type='custom',
+                            size_hint=(.9, None),
+                            buttons=[MDFlatButton(text='YES, DELETE IT', on_release=self.remove_tab),
+                            MDFlatButton(text='NO, KEEP IT', on_release=self.close)]
+                            )
+        self.dialog.set_normal_height()
+        self.dialog.open()
+       
+    def remove_tab(self, _instance):
         
         if MainScreen.tab_active_id != '@General' and MainScreen.tab_active_id in MainScreen.items_dict:
             tab = MainScreen.tabs_list[MainScreen.tab_active_id]
@@ -277,25 +281,40 @@ class MainScreen(Screen):
             Snackbar(text=f"There's no {self.tab_active_id} anymore").show()
         elif self.tab_active_id == '@General':
             Snackbar(text=f"You have no rights to delete {self.tab_active_id}").show()
-
+        self.dialog.dismiss()
 
 
 class CaroseneScreen(Screen):
-    pass
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+    oil = ObjectProperty(None)
+    joke = ObjectProperty(None)
+    
+    
+    # geting oil price from jonesoil / ballina
+    r = requests.post('https://jonesoil.ie/api/get_banded_oil_prices/product/1/quantity/1000',\
+                            headers={"User-Agent":"Mozilla/5.0"})
+    oil_p = json.loads(r.text)
+    oil_price = oil_p['real_price']
+    # getting random joke
+    r = requests.get(url="https://icanhazdadjoke.com", headers={"Accept": "text/plain"})
+    jokes = r.text
 
 
-list_covid = pd.read_csv('https://opendata.ecdc.europa.eu/covid19/casedistribution/csv')
-countries_grouped = list_covid.groupby('countriesAndTerritories')[['deaths','cases']]\
-                    .sum().sort_values('deaths', ascending=False).head(30)
-countries_list = countries_grouped.index.to_list()
-countries_deaths = countries_grouped.deaths.to_list()
-countries_cases = countries_grouped.cases.to_list()
+
 
 class CovidsContainer(BoxLayout):
 
 
     def tables(self):
-        
+        list_covid = pd.read_csv('https://opendata.ecdc.europa.eu/covid19/casedistribution/csv')
+        countries_grouped = list_covid.groupby('countriesAndTerritories')[['deaths','cases']]\
+                            .sum().sort_values('deaths', ascending=False).head(30)
+        countries_list = countries_grouped.index.to_list()
+        countries_deaths = countries_grouped.deaths.to_list()
+        countries_cases = countries_grouped.cases.to_list()
         data_tables = MDDataTable(
             size_hint=(1, 1),
             #use_pagination=True,
@@ -340,8 +359,6 @@ class JokeScreen(Screen):
 
 class MyApp(MDApp):
 
-
-    oil_price = oil_price
 
     items_dict_list = {}
     url = 'https://taskator12.firebaseio.com/.json'
