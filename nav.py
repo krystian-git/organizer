@@ -44,7 +44,6 @@ class TabsContainer(MDTabs):
 class CheckboxLeftWidget(IRightBodyTouch, MDCheckbox):
     '''Custom right container.'''
 
-    
 
 class ListItemWithCheckbox(OneLineRightIconListItem, TouchBehavior):
     
@@ -298,6 +297,7 @@ class CaroseneScreen(Screen):
                             headers={"User-Agent":"Mozilla/5.0"})
     oil_p = json.loads(r.text)
     oil_price = oil_p['real_price']
+    
     # getting random joke
     r = requests.get(url="https://icanhazdadjoke.com", headers={"Accept": "text/plain"})
     jokes = r.text

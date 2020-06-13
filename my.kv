@@ -14,7 +14,6 @@
     font_size: '30dp'
     
     CheckboxLeftWidget:
-        
         on_active: root.on_checkbox_active(self.active)
 
 
@@ -75,105 +74,70 @@ Screen:
                     elevation: 11
                     title: "Organizer 2020"
                     right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
-            
-            JokeScreen:
-                id: jokescreen  
-                name: "jokescreen"
-                BoxLayout:
-                    padding: "10dp"
-                    spacing: "10dp"
-                    orientation:"vertical"
-                    canvas.before:
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
-                            source: 'Gory.jpg'
-                    
-                    MDCard:
-                        orientation: "vertical"
-                        padding: "10dp"
-                        spacing: "10dp"
-                        size_hint: None, None
-                        size: (300, 100)
-                        pos_hint: {"center_x": .5}  
-                        MDLabel:
-                            text: "Oil Price"
-                            theme_text_color: "Secondary"
-                            size_hint_y: None
-                            height: self.texture_size[1]
-
-                        MDSeparator:
-                            height: "2dp"
-
-                        MDLabel:
-                            text: "The Cheapest Oil You Find around is ..."
-                   
-                    MDToolbar:
-                        id: toolbar
-                        pos_hint: {"top": 1}
-                        elevation: 11
-                        title: "Organizer 2020"
-                        right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
-            
+                     
 
             CaroseneScreen:
                 name: "carosenescreen"
                 id: carosenescreen
                 oil: oil
                 joke: joke
-                on_enter:   oil.text = self.oil_price
-                BoxLayout:
-                    orientation: "vertical"
-                    cols: 1
-                    MDToolbar:
-                        id: toolbar
-                        pos_hint: {"top": 1}
-                        elevation: 11
-                        title: "Organizer 2020"
-                        right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+                on_enter:   
                     
-                    ScrollView:
-                        pos_hint: {'top': 1.0 - toolbar.height / self.parent.height}
-                        size:self.parent.size
-                        BoxLayout:
-                            cols:1
-                            orientation: "vertical"
-                            MDCard:
-                                orientation: "vertical"
-                                size_hint: None, None
-                                size: "380dp", "120dp"
-                                spacing: "20dp"
-                                padding: "10dp"
-                                pos_hint: {"center_x": .5, "top": .8}
-                                MDLabel:
-                                    id: oil
-                                    text: ""
-                                    theme_text_color: "Secondary"
-                                    size_hint_y: None
-                                    height: self.texture_size[1]
-                                    pos_hint: {"center_x":.5, "top":1}
-                                MDRaisedButton:
-                                    text: "Refresh"
-                                    pos_hint: {"center_x":.5}
+                    joke.text = self.jokes
+                
+                MDToolbar:
+                    id: toolbar
+                    pos_hint: {"top": 1}
+                    elevation: 11
+                    title: "Organizer 2020"
+                    right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+                
+            
+                MDCard:
+                    orientation: "vertical"
+                    size_hint: (.9, .1)
+                    border_radius: "6dp"
+                    
+                    pos_hint: {"center_x": .5, "top": .8}
+                    focus_behavior: True
+                    elevation: 11
+                    
+                    MDLabel:
+                                          
+                        id: oil
+                        text: "Cheapest Carosene: Jones Oil " + carosenescreen.oil_price + "/1000L"
+                        theme_text_color: "custom"
+                        size_hint:(1,1)
+                        text_size: self.size 
+                        halign: "center"
+                        valign: "middle"
+                        canvas.before:
+                            Color:
+                                rgba: .3,.7,.9,1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                MDCard:
+                    orientation: "vertical"
+                    size_hint: (.9, .2)
+                    spacing: "20dp"
+                    padding: "10dp"
+                    pos_hint: {"center_x": .5, "top": .6}
+                    focus_behavior: True
+                    elevation: 11  
+                    MDLabel:
+                        
+                        text: "JUst random Joke"
+                        theme_text_color: "Primary"
+                                     
+                    MDLabel:
+                        id: joke
+                        text: ""
+                        theme_text_color: "Primary"
+                                     
+                        
 
-                            MDCard:
-                                orientation: "vertical"
-                                size_hint: None, None
-                                size: "380dp", "120dp"
-                                spacing: "20dp"
-                                padding: "10dp"
-                                pos_hint: {"center_x": .5, "top": .4}
-                                MDLabel:
-                                    id: joke
-                                    text: ""
-                                    theme_text_color: "Secondary"
-                                    size_hint_y: None
-                                    height: self.texture_size[1]
-                                    pos_hint: {"center_x":.5, "top":1}
-                                MDRaisedButton:
-                                    text: "Refresh"
-                                    pos_hint: {"center_x":.5}
-                            
+                    
         MDNavigationDrawer:
             id: nav_drawer
             ContentNavigationDrawer:
@@ -213,15 +177,7 @@ Screen:
                         IconLeftWidget:
                             icon: "gas-station"
                             theme_text_color: "Custom"
-                    ItemDrawer:
-                        text: "Weather"
-                        theme_text_color: "Custom"
-                        on_release:
-                            nav_drawer.set_state("close")
-                            screen_manager.current = "jokescreen"
-                        IconLeftWidget:
-                            icon: "weather-partly-cloudy"
-                            theme_text_color: "Custom"
+                    
                     ItemDrawer:
                         text: "Covid Stats"
                         theme_text_color: "Custom"
@@ -241,7 +197,7 @@ Screen:
                         theme_text_color: "Custom"
                         on_release:
                             nav_drawer.set_state("close")
-                            screen_manager.current = "scr 2"
+                            screen_manager.current = "covidscreen"
                         IconLeftWidget:
                             icon: "email-send-outline"
                             theme_text_color: "Custom"
