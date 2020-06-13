@@ -293,47 +293,57 @@ class CaroseneScreen(Screen):
     
     
     # geting oil price from jonesoil / ballina
-    r = requests.post('https://jonesoil.ie/api/get_banded_oil_prices/product/1/quantity/1000',\
-                            headers={"User-Agent":"Mozilla/5.0"})
-    oil_p = json.loads(r.text)
-    oil_price = oil_p['real_price']
+    try:
+        r = requests.post('https://jonesoil.ie/api/get_banded_oil_prices/product/1/quantity/1000',\
+                                headers={"User-Agent":"Mozilla/5.0"})
+        oil_p = json.loads(r.text)
+        oil_price = oil_p['real_price']
+        
+        # getting random joke
+        
+        r = requests.get(url="https://icanhazdadjoke.com", headers={"Accept": "text/plain"})
+        jokes = r.text
+    except:
+        Snackbar(text='Check Your Internet').show()
+        oil_price = ''
+        jokes = ''
     
-    # getting random joke
-    r = requests.get(url="https://icanhazdadjoke.com", headers={"Accept": "text/plain"})
-    jokes = r.text
 
-
-
+class ContactUs(Screen):
+    pass
 
 class CovidsContainer(BoxLayout):
 
 
     def tables(self):
-        list_covid = pd.read_csv('https://opendata.ecdc.europa.eu/covid19/casedistribution/csv')
-        countries_grouped = list_covid.groupby('countriesAndTerritories')[['deaths','cases']]\
-                            .sum().sort_values('deaths', ascending=False).head(30)
-        countries_list = countries_grouped.index.to_list()
-        countries_deaths = countries_grouped.deaths.to_list()
-        countries_cases = countries_grouped.cases.to_list()
-        data_tables = MDDataTable(
-            size_hint=(1, 1),
-            #use_pagination=True,
-            check=True,
-            rows_num = 30,
-            sort = True,
-            column_data=[
-                ("Country", dp(38)),
-                ("Deaths", dp(12)),
-                ("Cases", dp(15)),
+        try:
+            list_covid = pd.read_csv('https://opendata.ecdc.europa.eu/covid19/casedistribution/csv')
+            countries_grouped = list_covid.groupby('countriesAndTerritories')[['deaths','cases']]\
+                                .sum().sort_values('deaths', ascending=False).head(30)
+            countries_list = countries_grouped.index.to_list()
+            countries_deaths = countries_grouped.deaths.to_list()
+            countries_cases = countries_grouped.cases.to_list()
+            data_tables = MDDataTable(
+                size_hint=(1, 1),
+                #use_pagination=True,
+                check=True,
+                rows_num = 30,
+                sort = True,
+                column_data=[
+                    ("Country", dp(38)),
+                    ("Deaths", dp(12)),
+                    ("Cases", dp(15)),
+                    ],
+                row_data=[
+                    (country.replace('_', ' '), death, case)
+                    for country, death, case in zip(countries_list,  countries_deaths, countries_cases)
                 ],
-            row_data=[
-                (country.replace('_', ' '), death, case)
-                for country, death, case in zip(countries_list,  countries_deaths, countries_cases)
-            ],
-        )
-        data_tables.bind(on_row_press=self.on_row_press)
-        data_tables.bind(on_check_press=self.on_check_press)
-        self.add_widget(data_tables)
+            )
+            data_tables.bind(on_row_press=self.on_row_press)
+            data_tables.bind(on_check_press=self.on_check_press)
+            self.add_widget(data_tables)
+        except:
+            Snackbar(text="Check Your Internet").show()
     """ def on_start(self):
         self.data_tables.open() """
     def table_reset(self):
@@ -359,12 +369,15 @@ class JokeScreen(Screen):
 
 class MyApp(MDApp):
 
+    database = None
 
     items_dict_list = {}
     url = 'https://taskator12.firebaseio.com/.json'
-    request = requests.get(url=url)
-    database = request.json()
-   
+    try:
+        request = requests.get(url=url)
+        database = request.json()
+    except:
+        print('no connection')
     def build(self):
     
         self.theme_cls.primary_palette = "BlueGray"
@@ -397,6 +410,8 @@ class MyApp(MDApp):
                 print(MainScreen.items_dict)
         else:
             MainScreen.items_dict = {}
+            Snackbar(text="You have NO internet").show()
+
         MainScreen.tab_active_id = '@General'
         
 
