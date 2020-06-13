@@ -20,6 +20,7 @@ from kivy.properties import StringProperty, ObjectProperty
 import pandas as pd
 from kivymd.uix.datatables import MDDataTable
 from kivy.metrics import dp
+from requests.exceptions import ConnectionError
 
 
 def validate_input(string):
@@ -292,22 +293,21 @@ class CaroseneScreen(Screen):
     joke = ObjectProperty(None)
     
     
-    # geting oil price from jonesoil / ballina
-    try:
-        r = requests.post('https://jonesoil.ie/api/get_banded_oil_prices/product/1/quantity/1000',\
-                                headers={"User-Agent":"Mozilla/5.0"})
-        oil_p = json.loads(r.text)
-        oil_price = oil_p['real_price']
-        
-        # getting random joke
-        
-        r = requests.get(url="https://icanhazdadjoke.com", headers={"Accept": "text/plain"})
-        jokes = r.text
-    except:
-        Snackbar(text='Check Your Internet').show()
-        oil_price = ''
-        jokes = ''
     
+    def on_enter(self):
+        try:
+            r = requests.post('https://jonesoil.ie/api/get_banded_oil_prices/product/1/quantity/1000',\
+                            headers={"User-Agent":"Mozilla/5.0"})
+            oil_p = json.loads(r.text)
+            oil_price = oil_p['real_price']
+            self.oil.text = f"Cheapest Carosene: Jones Oil: {oil_price}/1000L"
+            # getting random joke
+    
+            r = requests.get(url="https://icanhazdadjoke.com", headers={"Accept": "text/plain"})
+            self.joke.text = r.text
+        except ConnectionError as e:    # This is the correct syntax
+            Snackbar(text='Check Your Internet').show()
+            
 
 class ContactUs(Screen):
     pass

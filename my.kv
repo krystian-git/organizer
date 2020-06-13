@@ -81,9 +81,7 @@ Screen:
                 id: carosenescreen
                 oil: oil
                 joke: joke
-                on_enter:   
-                    joke.text = self.jokes 
-                    
+                                    
                 MDToolbar:
                     id: toolbar
                     pos_hint: {"top": 1}
@@ -104,7 +102,7 @@ Screen:
                     MDLabel:
                                           
                         id: oil
-                        text: "Cheapest Carosene: Jones Oil " + carosenescreen.oil_price + "/1000L"
+                        text: ""
                         theme_text_color: "Primary"
                         size_hint:(1,1)
                         text_size: self.size 
@@ -119,7 +117,7 @@ Screen:
                 MDCard:
                     orientation: "vertical"
                     size_hint: (.9, .1)
-                    pos_hint: {"center_x": .5, "top": .6}
+                    pos_hint: {"center_x": .5, "top": .68}
                     focus_behavior: True
                     elevation: 11  
                             
@@ -144,7 +142,7 @@ Screen:
                 BoxLayout:             
                     cols:1
                     orientation: 'vertical'
-                    id: covidscontainer   
+                    id: czop   
                 MDToolbar:
                     id: toolbar
                     pos_hint: {"top": 1}
