@@ -140,22 +140,63 @@ Screen:
             ContactUs:
                 id: contactus
                 name: "contactus"
-               
-                BoxLayout:             
-                    cols:1
-                    orientation: 'vertical'
-                    id: czop   
                 MDToolbar:
                     id: toolbar
                     pos_hint: {"top": 1}
                     elevation: 11
                     title: "Organizer 2020"
                     right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
-                     
-                     
-                        
+                ScrollView: 
+                    pos_hint: {'top': .98 - toolbar.height / self.parent.height}
+                    scroll_type: ['bars', 'content']
 
-                    
+                    BoxLayout:
+                        size_hint: 1,None
+                        padding: "20dp"
+                        orientation: 'vertical'
+                        cols:1
+                        height: self.minimum_height
+                        
+                        MDCard:
+                            height: plytka.height
+                            orientation: "vertical"
+                            size_hint: (.95, None)
+                            focus_behavior: True
+                            elevation: 11  
+                            pos_hint: {'top':1, "center_x":.5}                      
+                            MDBoxLayout:
+                                id: plytka
+                                orientation: 'vertical'
+                                cols: 1
+                                spacing: "10dp"
+                                padding: "10dp"
+                                adaptive_height: True
+                                canvas.before:
+                                    Color: 
+                                        rgba: .376,.49,.545, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                                MDTextFieldRect:
+                                    id: email
+
+                                    hint_text: "Your email"
+                                    size_hint: 1, None
+                                    height: "30dp"
+                                    pos_hint: {'center_x':.5}
+                                MDTextFieldRect:
+                                    id: email_content
+                                    size_hint: 1, None
+                                    hint_text: "Comment"
+                                    height: "200dp"
+                                    pos_hint: {'center_x':.5}
+                                MDRectangleFlatButton:
+                                    text: "SEND MESSAGE"
+                                    opposite_colors: True
+                                    md_bg_color: 1,1,1,1
+                                    pos_hint: {"center_x":.5}
+                                    text_color:.5,.5,.5, 1
+        
         MDNavigationDrawer:
             id: nav_drawer
             ContentNavigationDrawer:

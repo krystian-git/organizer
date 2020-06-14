@@ -20,6 +20,7 @@ from kivy.properties import StringProperty, ObjectProperty
 import pandas as pd
 from kivymd.uix.datatables import MDDataTable
 from kivy.metrics import dp
+from kivymd.uix.screen import MDScreen
 from requests.exceptions import ConnectionError
 
 
@@ -309,7 +310,7 @@ class CaroseneScreen(Screen):
             Snackbar(text='Check Your Internet').show()
             
 
-class ContactUs(Screen):
+class ContactUs(MDScreen):
     pass
 
 class CovidsContainer(BoxLayout):
