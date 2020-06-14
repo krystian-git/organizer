@@ -92,10 +92,10 @@ Screen:
             
                 MDCard:
                     orientation: "vertical"
-                    size_hint: (.9, .1)
+                    size_hint: (.95, .1)
                     border_radius: "10dp"
                     
-                    pos_hint: {"center_x": .5, "top": .8}
+                    pos_hint: {"center_x": .5, "top": .88}
                     focus_behavior: True
                     elevation: 11
                     
@@ -103,6 +103,7 @@ Screen:
                                           
                         id: oil
                         text: ""
+                        padding:(10,10)
                         theme_text_color: "Primary"
                         size_hint:(1,1)
                         text_size: self.size 
@@ -116,13 +117,14 @@ Screen:
                                 size: self.size
                 MDCard:
                     orientation: "vertical"
-                    size_hint: (.9, .1)
-                    pos_hint: {"center_x": .5, "top": .68}
+                    size_hint: (.95, .1)
+                    pos_hint: {"center_x": .5, "top": .77}
                     focus_behavior: True
                     elevation: 11  
                             
                     MDLabel:
                         id: joke
+                        padding:(10,10)
                         text: ""
                         theme_text_color: "Primary"
                         size_hint:(1,1)

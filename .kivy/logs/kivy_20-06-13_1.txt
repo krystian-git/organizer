@@ -1,0 +1,62 @@
+[INFO   ] Logger: Record log in /storage/emulated/0/organizer/.kivy/logs/kivy_20-06-13_1.txt
+[INFO   ] Kivy: v1.11.0.dev0, git-8b6af30, 20190320
+[INFO   ] Python: v3.7.2 (default, Mar 20 2019, 15:02:54) 
+[GCC 8.2.0]
+[INFO   ] KivyMD: v0.104.1
+[INFO   ] Factory: 184 symbols loaded
+[INFO   ] Image: Providers: img_tex, img_dds, img_sdl2, img_pil, img_gif (img_ffpyplayer ignored)
+[INFO   ] Window: Provider: sdl2
+[INFO   ] GL: Using the "OpenGL ES 2" graphics system
+[INFO   ] GL: Backend used <sdl2>
+[INFO   ] GL: OpenGL version <b'OpenGL ES 3.2 V@331.0 (GIT@50f1b2d, I1b05bd271c) (Date:04/09/19)'>
+[INFO   ] GL: OpenGL vendor <b'Qualcomm'>
+[INFO   ] GL: OpenGL renderer <b'Adreno (TM) 505'>
+[INFO   ] GL: OpenGL parsed version: 3, 2
+[INFO   ] GL: Texture max size <16384>
+[INFO   ] GL: Texture max units <16>
+[INFO   ] Window: auto add sdl2 input provider
+[INFO   ] Window: virtual keyboard not allowed, single mode, not docked
+[INFO   ] Text: Provider: sdl2
+[INFO   ] GL: NPOT texture support is available
+[WARNING] stderr: Traceback (most recent call last):
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/lang/builder.py", line 623, in _apply_rule
+[WARNING] stderr:     setattr(widget_set, key, value)
+[WARNING] stderr:   File "kivy/weakproxy.pyx", line 33, in kivy.weakproxy.WeakProxy.__setattr__
+[WARNING] stderr:   File "kivy/properties.pyx", line 483, in kivy.properties.Property.__set__
+[WARNING] stderr:   File "kivy/properties.pyx", line 521, in kivy.properties.Property.set
+[WARNING] stderr:   File "kivy/properties.pyx", line 512, in kivy.properties.Property.set
+[WARNING] stderr:   File "kivy/properties.pyx", line 1228, in kivy.properties.OptionProperty.check
+[WARNING] stderr: ValueError: MDLabel.theme_text_color is set to an invalid option 'Primaryi'. Must be one of: ['Primary', 'Secondary', 'Hint', 'Error', 'Custom', 'ContrastParentBackground']
+[WARNING] stderr: 
+[WARNING] stderr: During handling of the above exception, another exception occurred:
+[WARNING] stderr: 
+[WARNING] stderr: Traceback (most recent call last):
+[WARNING] stderr:   File "/storage/emulated/0/organizer/nav.py", line 409, in <module>
+[WARNING] stderr:     MyApp().run()
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/app.py", line 799, in run
+[WARNING] stderr:     self.load_kv(filename=self.kv_file)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/app.py", line 596, in load_kv
+[WARNING] stderr:     root = Builder.load_file(rfilename)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/lang/builder.py", line 301, in load_file
+[WARNING] stderr:     return self.load_string(data, **kwargs)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/lang/builder.py", line 400, in load_string
+[WARNING] stderr:     self._apply_rule(widget, parser.root, parser.root)
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/lang/builder.py", line 630, in _apply_rule
+[WARNING] stderr:     e), cause=tb)
+[WARNING] stderr: kivy.lang.builder.BuilderException: Parser: File "/storage/emulated/0/organizer/my.kv", line 109:
+[WARNING] stderr: ...
+[WARNING] stderr:     107:                        id: oil
+[WARNING] stderr:     108:                        text: "Cheapest Carosene: Jones Oil " + carosenescreen.oil_price + "/1000L"
+[WARNING] stderr: >>  109:                        theme_text_color: "Primaryi"
+[WARNING] stderr:     110:                        size_hint:(1,1)
+[WARNING] stderr:     111:                        text_size: self.size 
+[WARNING] stderr: ...
+[WARNING] stderr: ValueError: MDLabel.theme_text_color is set to an invalid option 'Primaryi'. Must be one of: ['Primary', 'Secondary', 'Hint', 'Error', 'Custom', 'ContrastParentBackground']
+[WARNING] stderr:   File "/data/user/0/ru.iiec.pydroid3/files/aarch64-linux-android/lib/python3.7/site-packages/kivy/lang/builder.py", line 623, in _apply_rule
+[WARNING] stderr:     setattr(widget_set, key, value)
+[WARNING] stderr:   File "kivy/weakproxy.pyx", line 33, in kivy.weakproxy.WeakProxy.__setattr__
+[WARNING] stderr:   File "kivy/properties.pyx", line 483, in kivy.properties.Property.__set__
+[WARNING] stderr:   File "kivy/properties.pyx", line 521, in kivy.properties.Property.set
+[WARNING] stderr:   File "kivy/properties.pyx", line 512, in kivy.properties.Property.set
+[WARNING] stderr:   File "kivy/properties.pyx", line 1228, in kivy.properties.OptionProperty.check
+[WARNING] stderr: 
