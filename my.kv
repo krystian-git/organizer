@@ -81,7 +81,6 @@ Screen:
                 id: carosenescreen
                 oil: oil
                 joke: joke
-                                    
                 MDToolbar:
                     id: toolbar
                     pos_hint: {"top": 1}
@@ -89,54 +88,73 @@ Screen:
                     title: "Organizer 2020"
                     right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
                 
-            
-                MDCard:
-                    orientation: "vertical"
-                    size_hint: (.95, .1)
-                    border_radius: "10dp"
-                    
-                    pos_hint: {"center_x": .5, "top": .88}
-                    focus_behavior: True
-                    elevation: 11
-                    
-                    MDLabel:
-                                          
-                        id: oil
-                        text: ""
-                        padding:(10,10)
-                        theme_text_color: "Primary"
-                        size_hint:(1,1)
-                        text_size: self.size 
-                        halign: "center"
-                        valign: "middle"
+                ScrollView: 
+                    pos_hint: {'top': .98 - toolbar.height / self.parent.height}
+
+                    GridLayout:
+                        id: scroll_box
+                        size_hint: 1,None
+                        orientation: 'vertical'
+                        cols:1
+                        height: self.minimum_height + 80
+                        spacing: "20dp"
+                        padding: "20dp"
                         canvas.before:
-                            Color:
-                                rgba: 0,0.8,0.8,1
+                            Color: 
+                                rgba: 1,0.5,0.5,1
                             Rectangle:
                                 pos: self.pos
                                 size: self.size
-                MDCard:
-                    orientation: "vertical"
-                    size_hint: (.95, .1)
-                    pos_hint: {"center_x": .5, "top": .77}
-                    focus_behavior: True
-                    elevation: 11  
+                    
+                        MDCard:
+                            id: oil_card
+                            orientation: "vertical"
+                            size_hint: (.95, None)
+                            border_radius: "10dp"
+                            height: oil.height
+                            pos_hint: {"center_x": .5, "top":1}
+                            focus_behavior: True
+                            elevation: 11
                             
-                    MDLabel:
-                        id: joke
-                        padding:(10,10)
-                        text: ""
-                        theme_text_color: "Primary"
-                        size_hint:(1,1)
-                        text_size: self.size 
-                        halign: "center"
-                        valign: "middle"
-                        canvas.before:
-                            Color:
-                                rgba: .3,.7,.9,1
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size      
+                            
+                            MDLabel:
+                                                
+                                id: oil
+                                text: ""
+                                theme_text_color: "Primary"
+                                size_hint:(1,None)
+                                text_size: self.size 
+                                halign: "center"
+                                valign: "middle"
+                                canvas.before:
+                                    Color:
+                                        rgba: 0,0.8,0.8,1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                        MDCard:
+                            id: joke_card
+                            orientation: "vertical"
+                            size_hint: (.95, None)
+                            pos_hint: {"center_x": .5}
+                            focus_behavior: True
+                            elevation: 11  
+                            height: joke.height
+                            
+                            MDLabel:
+                                id: joke
+                                text: ""
+                                theme_text_color: "Primary"
+                                size_hint:(1,None)
+                                text_size: self.size 
+                                halign: "center"
+                                valign: "middle"
+                                canvas.before:
+                                    Color:
+                                        rgba: .3,.7,.9,1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size      
             ContactUs:
                 id: contactus
                 name: "contactus"
@@ -149,15 +167,18 @@ Screen:
                 ScrollView: 
                     pos_hint: {'top': .98 - toolbar.height / self.parent.height}
                     scroll_type: ['bars', 'content']
-
-                    BoxLayout:
+                    size_hint: 1, None
+                    height: grid.height
+                    GridLayout:
+                        id: grid
                         size_hint: 1,None
                         padding: "20dp"
                         orientation: 'vertical'
                         cols:1
-                        height: self.minimum_height
+                        height: self.minimum_height +100
                         
                         MDCard:
+                            id: card_email
                             height: plytka.height
                             orientation: "vertical"
                             size_hint: (.95, None)
@@ -173,7 +194,7 @@ Screen:
                                 adaptive_height: True
                                 canvas.before:
                                     Color: 
-                                        rgba: .376,.49,.545, 1
+                                        rgba: .9,.9,.5, 1
                                     Rectangle:
                                         pos: self.pos
                                         size: self.size
