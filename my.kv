@@ -5,8 +5,16 @@
     pos_hint: {"center_x": .5}
     focus_behavior: True
     elevation: 11  
-    
+    padding: (10,10)
+<JokeLabel>:
+    theme_text_color:"Primary"
 
+    canvas.before:
+        Color:
+            rgba: .3,.7,.9,1
+        Rectangle:
+            pos: self.pos
+            size: self.size 
 
 <DialogTabsContainer>
     orientation: "vertical"
