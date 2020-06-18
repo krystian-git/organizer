@@ -12,6 +12,8 @@ from kivy.uix.scrollview import ScrollView
 from kivymd.uix.list import MDList, IconRightWidget
 from kivymd.uix.behaviors import TouchBehavior
 from kivymd.theming import ThemableBehavior
+from kivymd.uix.label import MDLabel
+from kivymd.uix.card import MDCard
 import json
 import requests
 from kivymd.uix.snackbar import Snackbar
@@ -283,7 +285,8 @@ class MainScreen(Screen):
         elif self.tab_active_id == '@General':
             Snackbar(text=f"You have no rights to delete {self.tab_active_id}").show()
         self.dialog.dismiss()
-
+class MDJokeCard(MDCard):
+    pass
 
 class CaroseneScreen(Screen):
 
@@ -291,8 +294,8 @@ class CaroseneScreen(Screen):
         super().__init__(**kwargs)
     
     oil = ObjectProperty(None)
-    joke = ObjectProperty(None)
-    
+    joke_box = ObjectProperty(None)
+    scroll_box = ObjectProperty(None)
     
     
     def on_enter(self):
@@ -303,9 +306,21 @@ class CaroseneScreen(Screen):
             oil_price = oil_p['real_price']
             self.oil.text = f"Cheapest Carosene: Jones Oil: {oil_price}/1000L"
             # getting random joke
-    
-            r = requests.get(url="https://icanhazdadjoke.com", headers={"Accept": "text/plain"})
-            self.joke.text = r.text
+            for i in range(0,4):
+                r = requests.get(url="https://icanhazdadjoke.com", headers={"Accept": "text/plain"})
+                cardd = MDJokeCard()
+                self.scroll_box.add_widget(cardd)
+
+                joke_label = MDLabel(text=r.text,
+                                    theme_text_color="Primary",
+                                    size_hint=(1,None),
+                                    text_size=self.size, 
+                                    halign="center",
+                                    valign="middle")
+                                   
+                                        
+                print('ok')
+                cardd.add_widget(joke_label)
         except ConnectionError as e:    # This is the correct syntax
             Snackbar(text='Check Your Internet').show()
             

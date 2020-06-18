@@ -1,3 +1,12 @@
+<MDJokeCard>:
+    id: joke_card
+    orientation: "vertical"
+    size_hint: (.95, None)
+    pos_hint: {"center_x": .5}
+    focus_behavior: True
+    elevation: 11  
+    
+
 
 <DialogTabsContainer>
     orientation: "vertical"
@@ -45,7 +54,7 @@ Screen:
                     TabsContainer:
                         id: tabs
                         text_color_normal: 1,1,1,1
-                        font_style: 'H5'    
+                        font_style: 'Button'    
                         allow_stretch: False
                         on_tab_switch: app.on_tab_switch(*args)
                         background_normal: 1,1,1,1
@@ -80,7 +89,7 @@ Screen:
                 name: "carosenescreen"
                 id: carosenescreen
                 oil: oil
-                joke: joke
+                scroll_box: scroll_box
                 MDToolbar:
                     id: toolbar
                     pos_hint: {"top": 1}
@@ -99,13 +108,7 @@ Screen:
                         height: self.minimum_height + 80
                         spacing: "20dp"
                         padding: "20dp"
-                        canvas.before:
-                            Color: 
-                                rgba: 1,0.5,0.5,1
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
-                    
+                     
                         MDCard:
                             id: oil_card
                             orientation: "vertical"
@@ -126,35 +129,28 @@ Screen:
                                 text_size: self.size 
                                 halign: "center"
                                 valign: "middle"
+                                padding: (10,10)
                                 canvas.before:
                                     Color:
                                         rgba: 0,0.8,0.8,1
                                     Rectangle:
                                         pos: self.pos
                                         size: self.size
-                        MDCard:
-                            id: joke_card
-                            orientation: "vertical"
-                            size_hint: (.95, None)
-                            pos_hint: {"center_x": .5}
-                            focus_behavior: True
-                            elevation: 11  
-                            height: joke.height
-                            
-                            MDLabel:
-                                id: joke
-                                text: ""
-                                theme_text_color: "Primary"
-                                size_hint:(1,None)
-                                text_size: self.size 
-                                halign: "center"
-                                valign: "middle"
-                                canvas.before:
-                                    Color:
-                                        rgba: .3,.7,.9,1
-                                    Rectangle:
-                                        pos: self.pos
-                                        size: self.size      
+                        #MDJokeCard:
+                            #MDLabel:
+                                #id: joke
+                                #text: ""
+                                #theme_text_color: "Primary"
+                                #size_hint:(1,None)
+                                #text_size: self.size 
+                                #halign: "center"
+                                #valign: "middle"
+                                #canvas.before:
+                                    #Color:
+                                        #rgba: .3,.7,.9,1
+                                    #Rectangle:
+                                        #pos: self.pos
+                                        #size: self.size      
             ContactUs:
                 id: contactus
                 name: "contactus"
@@ -167,15 +163,13 @@ Screen:
                 ScrollView: 
                     pos_hint: {'top': .98 - toolbar.height / self.parent.height}
                     scroll_type: ['bars', 'content']
-                    size_hint: 1, None
-                    height: grid.height
                     GridLayout:
                         id: grid
                         size_hint: 1,None
                         padding: "20dp"
                         orientation: 'vertical'
                         cols:1
-                        height: self.minimum_height +100
+                        height: self.minimum_height +60
                         
                         MDCard:
                             id: card_email
@@ -189,18 +183,18 @@ Screen:
                                 id: plytka
                                 orientation: 'vertical'
                                 cols: 1
-                                spacing: "10dp"
-                                padding: "10dp"
+                                spacing: "20dp"
+                                padding: "20dp"
                                 adaptive_height: True
                                 canvas.before:
                                     Color: 
-                                        rgba: .9,.9,.5, 1
+                                        rgba: .8,.4,.4, 1
                                     Rectangle:
                                         pos: self.pos
                                         size: self.size
                                 MDTextFieldRect:
                                     id: email
-
+                                    multiline: False
                                     hint_text: "Your email"
                                     size_hint: 1, None
                                     height: "30dp"
@@ -208,9 +202,10 @@ Screen:
                                 MDTextFieldRect:
                                     id: email_content
                                     size_hint: 1, None
-                                    hint_text: "Comment"
+                                    hint_text: "Leave a comment"
                                     height: "200dp"
                                     pos_hint: {'center_x':.5}
+                                    multiline: True
                                 MDRectangleFlatButton:
                                     text: "SEND MESSAGE"
                                     opposite_colors: True
