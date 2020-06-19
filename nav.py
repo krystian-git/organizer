@@ -288,6 +288,8 @@ class MainScreen(Screen):
 class MDJokeCard(MDCard):
     pass
 
+class JokeLabel(MDLabel):
+    pass
 class CaroseneScreen(Screen):
 
     def __init__(self, **kwargs):
@@ -310,9 +312,8 @@ class CaroseneScreen(Screen):
                 r = requests.get(url="https://icanhazdadjoke.com", headers={"Accept": "text/plain"})
                 cardd = MDJokeCard()
                 self.scroll_box.add_widget(cardd)
-
-                joke_label = MDLabel(text=r.text,
-                                    theme_text_color="Primary",
+                print('-')
+                joke_label = JokeLabel(text=r.text,
                                     size_hint=(1,None),
                                     text_size=self.size, 
                                     halign="center",
