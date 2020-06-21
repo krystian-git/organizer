@@ -285,11 +285,13 @@ class MainScreen(Screen):
         elif self.tab_active_id == '@General':
             Snackbar(text=f"You have no rights to delete {self.tab_active_id}").show()
         self.dialog.dismiss()
-class MDJokeCard(MDCard):
+
+      
+class JokeLabel(MDLabel):
+
     pass
 
-class JokeLabel(MDLabel):
-    pass
+
 class CaroseneScreen(Screen):
 
     def __init__(self, **kwargs):
@@ -299,7 +301,6 @@ class CaroseneScreen(Screen):
     joke_box = ObjectProperty(None)
     scroll_box = ObjectProperty(None)
     
-    
     def on_enter(self):
         try:
             r = requests.post('https://jonesoil.ie/api/get_banded_oil_prices/product/1/quantity/1000',\
@@ -307,27 +308,32 @@ class CaroseneScreen(Screen):
             oil_p = json.loads(r.text)
             oil_price = oil_p['real_price']
             self.oil.text = f"Cheapest Carosene: Jones Oil: {oil_price}/1000L"
-            # getting random joke
-            for i in range(0,4):
-                r = requests.get(url="https://icanhazdadjoke.com", headers={"Accept": "text/plain"})
-                cardd = MDJokeCard()
-                self.scroll_box.add_widget(cardd)
-                print('-')
-                joke_label = JokeLabel(text=r.text,
-                                    size_hint=(1,None),
-                                    text_size=self.size, 
-                                    halign="center",
-                                    valign="middle")
-                                   
-                                        
-                print('ok')
-                cardd.add_widget(joke_label)
         except ConnectionError as e:    # This is the correct syntax
             Snackbar(text='Check Your Internet').show()
             
 
 class ContactUs(MDScreen):
     pass
+class JokeScreen(MDScreen):
+    
+    joke_box = ObjectProperty(None)
+    def on_enter(self):
+        try:
+            # getting random joke
+            for i in range(0,10):
+                r = requests.get(url="https://icanhazdadjoke.com", headers={"Accept": "text/plain"})
+                label = JokeLabel(text=r.text)
+                self.joke_box.add_widget(label)
+                
+                                   
+                                        
+                print('ok')
+                
+        except ConnectionError as e:    # This is the correct syntax
+            Snackbar(text='Check Your Internet').show()
+            
+
+
 
 class CovidsContainer(BoxLayout):
 
@@ -380,9 +386,7 @@ class CovidScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
     
-class JokeScreen(Screen):
-    pass      
-    
+
 
 class MyApp(MDApp):
 

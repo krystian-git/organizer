@@ -1,17 +1,24 @@
 <MDJokeCard>:
+    joke_label:joke_label
     id: joke_card
     orientation: "vertical"
     size_hint: (.95, None)
     pos_hint: {"center_x": .5}
     focus_behavior: True
     elevation: 11  
-    padding: (10,10)
+    height: joke_label.height
 <JokeLabel>:
+    size_hint:(1,None)
     theme_text_color:"Primary"
-
+    halign:"center"
+    valign:"middle"
+    text_size: self.width, None
+    height: self.texture_size[1]
+    padding:(10,10)
+    theme_text_color: "ContrastParentBackground"
     canvas.before:
         Color:
-            rgba: .3,.7,.9,1
+            rgba:  0.9,.8,.6,1
         Rectangle:
             pos: self.pos
             size: self.size 
@@ -159,6 +166,47 @@ Screen:
                                     #Rectangle:
                                         #pos: self.pos
                                         #size: self.size      
+            JokeScreen:
+                name: "jokescreen"
+                id: jokescreen
+                
+                joke_box: joke_box
+                MDToolbar:
+                    id: toolbar
+                    pos_hint: {"top": 1}
+                    elevation: 11
+                    title: "Organizer 2020"
+                    right_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+                
+                ScrollView: 
+                    pos_hint: {'top': .98 - toolbar.height / self.parent.height}
+
+                    GridLayout:
+                        id: joke_box
+                        size_hint: 1,None
+                        orientation: 'vertical'
+                        cols:1
+                        height: self.minimum_height + 80
+                        spacing: "10dp"
+                        padding: "10dp"
+                       
+                            
+                        #MDJokeCard:
+                            #MDLabel:
+                                #id: joke
+                                #text: ""
+                                #theme_text_color: "Primary"
+                                #size_hint:(1,None)
+                                #text_size: self.size 
+                                #halign: "center"
+                                #valign: "middle"
+                                #canvas.before:
+                                    #Color:
+                                        #rgba: .3,.7,.9,1
+                                    #Rectangle:
+                                        #pos: self.pos
+                                        #size: self.size  
+            
             ContactUs:
                 id: contactus
                 name: "contactus"
@@ -260,7 +308,15 @@ Screen:
                         IconLeftWidget:
                             icon: "gas-station"
                             theme_text_color: "Custom"
-                    
+                    ItemDrawer:
+                        text: "Joke area"
+                        theme_text_color: "Custom"
+                        on_release:
+                            nav_drawer.set_state("close")
+                            screen_manager.current = "jokescreen"
+                        IconLeftWidget:
+                            icon: "airballoon"
+                            theme_text_color: "Custom"
                     ItemDrawer:
                         text: "Covid Stats"
                         theme_text_color: "Custom"
